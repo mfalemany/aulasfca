@@ -311,7 +311,7 @@ if ($n_hidden_days < 7)                                  // (avoid the div by ze
 $column_month = number_format($column_month, 1, '.', '');  // (%) tidy the number up and make sure it's valid for CSS (no commas)
 
 ?>
-div#dwm_header {width: 100%; float: left; margin-top: 1.0em; margin-bottom: 0.5em}
+div#dwm_header {width: 100%; float: left; margin-top: 1.0em; margin-bottom: 0.5em; font-size: 1.2em;}
 div#dwm_areas, div#dwm_rooms  {float: left; margin-right: 2.0em}
 #dwm_header h3 {font-size: small; font-weight: normal; text-decoration: underline; 
     margin-top: 0; margin-bottom: 0.5em; padding-bottom: 0}
@@ -370,11 +370,19 @@ table.dwm_main {
   border-style: solid
 }
 
-.dwm_main td {padding: 0;
+.dwm_main td{
+    padding: 0;
     border-top:  <?php echo $main_table_cell_border_width ?>px solid <?php echo $main_table_body_h_border_color ?>;
     border-left: <?php echo $main_table_cell_border_width ?>px solid <?php echo $main_table_body_v_border_color ?>;
     border-bottom: 0;
-    border-right: 0}
+    border-right: 0;
+    f
+  }
+.dwm_main thead tr th{
+    display:table-cell;
+    vertical-align: middle;
+}
+
 .dwm_main td:first-child {border-left: 0}
 <?php
 // Note that it is important to have zero padding-left and padding-top on the th cells and the celldiv divs.
@@ -1295,9 +1303,9 @@ div.problem_report {border-bottom: 1px solid <?php echo $site_faq_entry_border_c
 
 /* ------------ MINCALS.PHP ---------------------*/
 #cals {float: right}
-div#cal_last {float: left}
-div#cal_this {float: left; margin-left: 1.0em}
-div#cal_next {float: left; margin-left: 1.0em}
+div#cal_last {float: left; margin-right: 2.0em}
+div#cal_this {float: left; margin-right: 2.0em}
+div#cal_next {float: left; margin-right: 2.0em}
 
 table.calendar {
   border-spacing: 0;
