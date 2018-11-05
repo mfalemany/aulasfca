@@ -546,9 +546,10 @@ function cell_html($cell, $query_strings, $is_invalid = FALSE)
         /* ========================================================== */
         $adaptador = new Adaptador();
         $nombre_reserva = $adaptador->get_nombre_materia($descr);
+        $nombre_reserva = ($nombre_reserva) ? $nombre_reserva : $descr;
         /* ========================================================== */
         $nombre_reserva = ucwords(strtolower($nombre_reserva));
-        $html .= "$nombre_reserva ($descr)</a>\n";
+        $html .= "$nombre_reserva</a>\n";
         //$html .= "$descr</a>\n";
         
         $html .= "</div>\n";
