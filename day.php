@@ -33,7 +33,7 @@ $timestamp = mktime(12, 0, 0, $month, $day, $year);
 // print the page header
 print_header($day, $month, $year, $area, isset($room) ? $room : null);
 
-echo "<div id=\"dwm_header\" class=\"screenonly\">\n";
+echo "<div id=\"dwm_header\" class=\"screenonly\" style=\"background-color:#FFF; font-weight:bolder;\">\n";
 
 // Show all available areas
 echo make_area_select_html('day.php', $area, $year, $month, $day);

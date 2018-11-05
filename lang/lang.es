@@ -9,13 +9,13 @@
 // This file is PHP code. Treat it as such.
 
 // Used in style.inc
-$vocab["mrbs"]               = "Sistema de Reservas de Salas y Aulas";
+$vocab["mrbs"]               = "Reserva de Aulas - Bedelía";
 
 // Used in functions.inc
 $vocab["report"]             = "Informes";
 $vocab["admin"]              = "Administración";
 $vocab["help"]               = "Ayuda";
-$vocab["search"]             = "Búsqueda";
+$vocab["search"]             = "Buscar";
 $vocab["outstanding"]        = "Reservas pendientes";
 
 // Used in day.php

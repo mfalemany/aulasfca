@@ -1,6 +1,8 @@
 <?php
 namespace MRBS;
 
+ini_set('display_errors',1);
+error_reporting(E_ALL);
 // Index is just a stub to redirect to the appropriate view
 // as defined in config.inc.php using the variable $default_view
 // If $default_room is defined in config.inc.php then this will

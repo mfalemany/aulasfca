@@ -2,6 +2,7 @@
 namespace MRBS;
 
 use MRBS\Form\Form;
+use Adaptador;
 
 function print_head($simple=false)
 {
@@ -126,7 +127,7 @@ function print_goto_date($day, $month, $year, $area, $room)
 
 function print_help($query_string)
 {
-  echo "<a href=\"help.php?$query_string\">" . get_vocab("help") . "</a>\n";
+  //echo "<a href=\"help.php?$query_string\">" . get_vocab("help") . "</a>\n";
 }
 
 
@@ -152,8 +153,25 @@ function print_search($day, $month, $year, $area, $room, $search_str=null)
   echo "<form id=\"header_search\" method=\"post\" action=\"search.php\">\n";
   echo Form::getTokenHTML() . "\n";
   echo "<div>\n";
-  echo "<label><a href=\"search.php?advanced=1\">" . get_vocab("search") . "</a></label>\n";
-  echo "<input type=\"search\" name=\"search_str\" value=\"" . htmlspecialchars($search_str) . "\" required>\n";
+  //echo "<label><a href=\"search.php?advanced=1\">" . get_vocab("search") . "</a></label>\n";
+ 
+   //obtengo las posibles opciones de seleccion
+    $adaptador = new Adaptador();
+    $opciones = $adaptador->get_opciones_select();
+
+    // 'mandatory' is there to prevent null input (pattern doesn't seem to be triggered until
+    // there is something there).
+   $params = array('label'      => '',
+                    'name'       => 'search_str',
+                    'type'       => 'text',
+                    'options'    => $opciones,
+                    'pattern'    => REGEX_TEXT_POS
+                    );
+
+                    
+    generate_select($params);
+  echo "<input type=\"submit\" value=\"Buscar\">\n";
+ // echo "<input type=\"search\" name=\"search_str\" value=\"" . htmlspecialchars($search_str) . "\" required>\n";
   echo "<input type=\"hidden\" name=\"day\" value=\"$day\">\n";
   echo "<input type=\"hidden\" name=\"month\" value=\"$month\">\n";
   echo "<input type=\"hidden\" name=\"year\" value=\"$year\">\n";
@@ -193,10 +211,6 @@ function print_nav($day, $month, $year, $area, $room, $search_str=null, $simple=
   {
     echo "<li>\n";
     print_goto_date($day, $month, $year, $area, $room);
-    echo "</li>\n";
-    
-    echo "<li>\n";
-    print_help($query_string);
     echo "</li>\n";
     
     echo "<li>\n";

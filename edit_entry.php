@@ -2,6 +2,8 @@
 namespace MRBS;
 
 use MRBS\Form\Form;
+use Adaptador;
+
 
 // If you want to add some extra columns to the entry and repeat tables to
 // record extra details about bookings then you can do so and this page should
@@ -243,7 +245,13 @@ function create_field_entry_name($disabled=FALSE)
   global $name, $maxlength, $is_mandatory_field;
   
   echo "<div id=\"div_name\">\n";
-  
+ 
+   //obtengo las posibles opciones de seleccion
+  $adaptador = new Adaptador();
+
+  ;
+  $opciones = $adaptador->get_opciones_select();
+
   // 'mandatory' is there to prevent null input (pattern doesn't seem to be triggered until
   // there is something there).
   $params = array('label'      => get_vocab("namebooker"),
@@ -251,13 +259,14 @@ function create_field_entry_name($disabled=FALSE)
                   'field'      => 'entry.name',
                   'value'      => $name,
                   'type'       => 'text',
+                  'options'    => $opciones,
                   'pattern'    => REGEX_TEXT_POS,
                   'disabled'   => $disabled,
-                  'mandatory'  => TRUE,
                   'maxlength'  => $maxlength['entry.name']);
                   
-  generate_input($params);
-
+  //generate_input($params);
+  //echo get_class(db());
+  generate_select($params);
   echo "</div>\n";
 }
 

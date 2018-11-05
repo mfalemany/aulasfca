@@ -19,7 +19,9 @@ http_headers(array("Content-type: text/css"),
 
 
 /* ------------ GENERAL -----------------------------*/
-
+*{
+  font-family: tahoma;
+}
 body {
   font-size: small;
   margin: 0;

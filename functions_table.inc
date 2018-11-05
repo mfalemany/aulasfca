@@ -1,5 +1,6 @@
 <?php
 namespace MRBS;
+use Adaptador;
 
 // width of the row label columns in the day and week views
 $first_last_width = 1;  // (%)
@@ -536,11 +537,20 @@ function cell_html($cell, $query_strings, $is_invalid = FALSE)
       else                 // if it is booked then show the booking
       {
         $html .= "<div data-id=\"$id\" data-type=\"$color\" class=\"celldiv slots" .
+
                  (($times_along_top) ? "1" : $slots) .
                  "\">\n";
+
         $html .= "<a href=\"view_entry.php?id=$id&amp;". $query_strings['booking'] . "\" title=\"$long_descr\">";
         $html .= ($is_repeat) ? "<img class=\"repeat_symbol $c\" src=\"images/repeat.png\" alt=\"" . get_vocab("series") . "\" title=\"" . get_vocab("series") . "\" width=\"10\" height=\"10\">" : '';
-        $html .= "$descr</a>\n";
+        /* ========================================================== */
+        $adaptador = new Adaptador();
+        $nombre_reserva = $adaptador->get_nombre_materia($descr);
+        /* ========================================================== */
+        $nombre_reserva = ucwords(strtolower($nombre_reserva));
+        $html .= "$nombre_reserva ($descr)</a>\n";
+        //$html .= "$descr</a>\n";
+        
         $html .= "</div>\n";
       }
       $html .= "</td>\n";

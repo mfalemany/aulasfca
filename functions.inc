@@ -1289,7 +1289,8 @@ function generate_options($options, $force_assoc=false, $value='')
     {
       $key = $text;
     }
-    $html .= "<option value=\"" . htmlspecialchars($key) . "\"";
+    $style = (substr($key,0,5) == 'nomat') ? 'background-color:#09426f;color:#FFF;' : '';
+    $html .= "<option style='$style' value=\"" . htmlspecialchars($key) . "\"";
     $html .= (in_array($key, $value)) ? " selected=\"selected\"" : '';
     $html .= ">".htmlspecialchars($text)."</option>\n";
   }

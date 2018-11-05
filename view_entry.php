@@ -6,6 +6,7 @@ use MRBS\Form\ElementFieldset;
 use MRBS\Form\ElementInputSubmit;
 use MRBS\Form\FieldInputSubmit;
 use MRBS\Form\FieldTextarea;
+use Adaptador;
 
 
 require "defaultincludes.inc";
@@ -377,7 +378,13 @@ else
 // Now that we know all the data we start drawing it
 
 echo "<h3" . (($keep_private && $is_private_field['entry.name']) ? " class=\"private\"" : "") . ">\n";
-echo ($keep_private && $is_private_field['entry.name']) ? "[" . get_vocab("unavailable") . "]" : htmlspecialchars($row['name']);
+$adaptador = new Adaptador();
+$materia = $adaptador->get_nombre_materia($row['name']);
+echo ($keep_private && $is_private_field['entry.name']) ? "[" . get_vocab("unavailable") . "]" : htmlspecialchars($materia);
+
+// ORIGINAL 
+//echo ($keep_private && $is_private_field['entry.name']) ? "[" . get_vocab("unavailable") . "]" : htmlspecialchars($row['name']);
+
 if (is_private_event($private) && $writeable) 
 {
   echo ' ('.get_vocab("unavailable").')';

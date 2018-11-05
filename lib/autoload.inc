@@ -7,7 +7,6 @@ spl_autoload_register(function ($class) {
   // Replace namespace separators with directory separators.
   // Append '.php'
   $file = $base_dir . str_replace('\\', '/', $class) . '.php';
-  
   if (is_readable($file))
   {
     require $file;

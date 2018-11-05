@@ -106,7 +106,7 @@ $mrbs_admin_email = "admin_email@your.org";
 $mrbs_company = "Your Company";   // This line must always be uncommented ($mrbs_company is used in various places)
 
 // Uncomment this next line to use a logo instead of text for your organisation in the header
-//$mrbs_company_logo = "your_logo.gif";    // name of your logo file.   This example assumes it is in the MRBS directory
+//$mrbs_company_logo = "logo_fca.gif";    // name of your logo file.   This example assumes it is in the MRBS directory
 
 // Uncomment this next line for supplementary information after your company name or logo
 //$mrbs_company_more_info = "You can put additional information here";  // e.g. "XYZ Department"

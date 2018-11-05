@@ -1,0 +1,431 @@
+[{
+	"codigos": ["131", "131."],
+	"materia": "ACTIVIDAD BIOLOGICA DEL SUELO",
+	"carrera": "AGR"
+}, {
+	"codigos": ["I18"],
+	"materia": "ADMINISTRACION DE EMPRESAS INDUSTRIALES",
+	"carrera": "IND"
+}, {
+	"codigos": ["85", "86."],
+	"materia": "ADMINISTRACION Y LEGISLACION AGRARIA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["05", "55", "56."],
+	"materia": "AGROCLIMATOLOGIA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["137", "137."],
+	"materia": "AGROMATICA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["102", "102."],
+	"materia": "ALGODON",
+	"carrera": "AGR"
+}, {
+	"codigos": ["122", "122."],
+	"materia": "ANALISIS DE PRODUCTOS AGROPECUARIOS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["119", "119."],
+	"materia": "ANALISIS DE SUELO PARA USO AGROPECUARIO",
+	"carrera": "AGR"
+}, {
+	"codigos": ["92."],
+	"materia": "ANATOMIA Y FISIOLOGIA ANIMAL",
+	"carrera": "AGR"
+}, {
+	"codigos": ["100", "100."],
+	"materia": "ARROZ",
+	"carrera": "AGR"
+}, {
+	"codigos": ["145", "145."],
+	"materia": "BIOFERTILIZACION Y ABONOS ORGANICOS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["108", "108."],
+	"materia": "BOSQUES IMPLANTADOS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["109", "109."],
+	"materia": "BOSQUES NATIVOS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["06", "59", "62."],
+	"materia": "BOTANICA SISTEMATICA Y FITOGEOGRAFIA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["10", "58", "59."],
+	"materia": "CALCULO ESTADISTICO Y BIOMETRIA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["IDIOM"],
+	"materia": "CERTIFICACION DE IDIOMA: INGLES",
+	"carrera": "AGR"
+}, {
+	"codigos": ["104", "104."],
+	"materia": "CITRICULTURA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["144", "144."],
+	"materia": "COMERCIALIZACION AGRARIA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["147", "147."],
+	"materia": "COOPERATIVISMO AGRARIO",
+	"carrera": "AGR"
+}, {
+	"codigos": ["113", "113."],
+	"materia": "CULTIVOS AROMATICOS Y MEDICINALES",
+	"carrera": "AGR"
+}, {
+	"codigos": ["28", "81", "82."],
+	"materia": "CULTIVOS I",
+	"carrera": "AGR"
+}, {
+	"codigos": ["29", "82", "83."],
+	"materia": "CULTIVOS II",
+	"carrera": "AGR"
+}, {
+	"codigos": ["30", "83", "84."],
+	"materia": "CULTIVOS III",
+	"carrera": "AGR"
+}, {
+	"codigos": ["107", "107."],
+	"materia": "CULTIVOS PROTEGIDOS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["148", "148."],
+	"materia": "DESARROLLO DE CAPACIDADES EMPRENDEDORAS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["123", "123."],
+	"materia": "DISENO Y FORM. TEC. Y ECON. DE PROY. AGR. DE RIEGO",
+	"carrera": "AGR"
+}, {
+	"codigos": ["118", "118."],
+	"materia": "DISENOS EXPERIMENTALES",
+	"carrera": "AGR"
+}, {
+	"codigos": ["71", "72."],
+	"materia": "ECOFISIOLOGIA (SEMINARIO DE PROFUNDIZACION)",
+	"carrera": "AGR"
+}, {
+	"codigos": ["91."],
+	"materia": "ECOLOGIA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["94."],
+	"materia": "ECONOMIA AGRARIA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["124", "124."],
+	"materia": "ECONOMIA AMBIENTAL",
+	"carrera": "AGR"
+}, {
+	"codigos": ["22", "66", "67."],
+	"materia": "ECONOMIA POLITICA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["25", "74", "78."],
+	"materia": "ECONOMIA Y SOCIOLOGIA AGRARIA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["19", "62", "63."],
+	"materia": "EDAFOLOGIA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["I15"],
+	"materia": "ELECTRICIDAD Y MAGNETISMO",
+	"carrera": "IND"
+}, {
+	"codigos": ["111", "111."],
+	"materia": "ENFERMEDADES DE LOS CULTIVOS REGIONALES DEL NEA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["125", "125."],
+	"materia": "EPISTEMOLOGIA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["133", "133."],
+	"materia": "FERTILIDAD DE SUELOS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["I09"],
+	"materia": "FISICA",
+	"carrera": "IND"
+}, {
+	"codigos": ["08", "54", "55."],
+	"materia": "FISICA I",
+	"carrera": "AGR"
+}, {
+	"codigos": ["09", "56", "57."],
+	"materia": "FISICA II",
+	"carrera": "AGR"
+}, {
+	"codigos": ["15", "60", "61."],
+	"materia": "FISIOLOGIA VEGETAL",
+	"carrera": "AGR"
+}, {
+	"codigos": ["16", "65", "66."],
+	"materia": "FITOPATOLOGIA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["106", "106."],
+	"materia": "FLORICULTURA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["23", "75", "76."],
+	"materia": "FORRAJICULTURA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["105", "105."],
+	"materia": "FRUTAS TROPICALES Y SUBTROPICALES",
+	"carrera": "AGR"
+}, {
+	"codigos": ["31", "80", "81."],
+	"materia": "FRUTICULTURA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["13", "61", "60."],
+	"materia": "GENETICA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["121", "121."],
+	"materia": "GESTION DE LA CALIDAD",
+	"carrera": "AGR"
+}, {
+	"codigos": ["127", "127."],
+	"materia": "GESTION Y EVALUACION DE IMPACTOS AMBIENTALES",
+	"carrera": "AGR"
+}, {
+	"codigos": ["116", "116."],
+	"materia": "GRANJA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["26", "70", "71."],
+	"materia": "HIDROLOGIA AGRICOLA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["32", "84", "85."],
+	"materia": "HORTICULTURA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["I06"],
+	"materia": "INFORMATICA Y PROGRAMACION",
+	"carrera": "IND"
+}, {
+	"codigos": ["I05"],
+	"materia": "INGLES I",
+	"carrera": "IND"
+}, {
+	"codigos": ["I14"],
+	"materia": "INGLES II",
+	"carrera": "IND"
+}, {
+	"codigos": ["129", "129."],
+	"materia": "INTRODUCCION A LA AGROBIOTECNOLOGIA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["50."],
+	"materia": "INTRODUCCION A LAS CIENCIAS AGRARIAS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["I01"],
+	"materia": "INTRODUCCION A LA INGENIERIA INDUSTRIAL",
+	"carrera": "IND"
+},{
+	"codigos": ["117", "117."],
+	"materia": "MANEJO DE RECURSOS FORRAJEROS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["138", "138."],
+	"materia": "MANEJO DE RODEOS DE CRIA BOVINA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["27", "76", "77."],
+	"materia": "MANEJO Y CONSERVACION DE SUELOS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["146", "146."],
+	"materia": "MARKETING AGROPECUARIO Y AGRONEGOCIOS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["I02"],
+	"materia": "MATEMATICA A (ALGEBRA Y GEOMETRIA ANALITICA)",
+	"carrera": "IND"
+}, {
+	"codigos": ["I04"],
+	"materia": "MATEMATICA B (ANALISIS I)",
+	"carrera": "IND"
+}, {
+	"codigos": ["I07"],
+	"materia": "MATEMATICA C (ANALISIS 2)",
+	"carrera": "IND"
+}, {
+	"codigos": ["I10"],
+	"materia": "MATEMATICA D",
+	"carrera": "IND"
+}, {
+	"codigos": ["01", "50", "51."],
+	"materia": "MATEMATICA I",
+	"carrera": "AGR"
+}, {
+	"codigos": ["04", "53", "54."],
+	"materia": "MATEMATICA II",
+	"carrera": "AGR"
+}, {
+	"codigos": ["I16"],
+	"materia": "MECANICA DE LOS FLUIDOS",
+	"carrera": "IND"
+}, {
+	"codigos": ["I19"],
+	"materia": "MECANICA Y MECANISMOS",
+	"carrera": "IND"
+}, {
+	"codigos": ["11", "67", "68."],
+	"materia": "MECANIZACION AGRICOLA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["78", "74."],
+	"materia": "MEJORAMIENTO GENETICO",
+	"carrera": "AGR"
+}, {
+	"codigos": ["126", "126."],
+	"materia": "METODOLOGIA DE LA INVESTIGACION",
+	"carrera": "AGR"
+}, {
+	"codigos": ["20", "63", "64."],
+	"materia": "MICROBIOLOGIA AGRICOLA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["I17"],
+	"materia": "MICROBIOLOGIA INDUSTRIAL",
+	"carrera": "IND"
+}, {
+	"codigos": ["02", "51", "53."],
+	"materia": "MORFOLOGIA DE LAS PLANTAS VASCULARES",
+	"carrera": "AGR"
+}, {
+	"codigos": ["68", "69."],
+	"materia": "NUTRICION ANIMAL",
+	"carrera": "AGR"
+}, {
+	"codigos": ["139", "139."],
+	"materia": "PASTURAS CULTIVADAS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["132", "132."],
+	"materia": "PLANEAMIENTO DEL MANEJO DE TIERRAS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["135", "135."],
+	"materia": "PLANEAMIENTO Y DISENOS DE PAISAJES",
+	"carrera": "AGR"
+}, {
+	"codigos": ["128", "128."],
+	"materia": "PRACTICAS DE LABORATORIO",
+	"carrera": "AGR"
+}, {
+	"codigos": ["I12"],
+	"materia": "PROBABILIDAD Y ESTADISTICA",
+	"carrera": "IND"
+}, {
+	"codigos": ["114", "114."],
+	"materia": "PRODUCCION LECHERA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["136", "136."],
+	"materia": "PRODUCCION OVINA PARA CARNE",
+	"carrera": "AGR"
+}, {
+	"codigos": ["115", "115."],
+	"materia": "PRODUCCION PORCINA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["130", "130."],
+	"materia": "PROPAGACION DE PLANTAS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["86", "87."],
+	"materia": "PROYECTO Y PLANIFICACION AGROPECUARIA (Seminario de Integracion)",
+	"carrera": "AGR"
+}, {
+	"codigos": ["14", "69", "70."],
+	"materia": "QUIMICA ANALITICA Y AGRICOLA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["03", "52", "52."],
+	"materia": "QUIMICA GENERAL E INORGANICA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["I03"],
+	"materia": "QUIMICA GENERAL E INORGANICA (INDUSTRIAL)",
+	"carrera": "IND"
+}, {
+	"codigos": ["I11"],
+	"materia": "QUIMICA INDUSTRIAL",
+	"carrera": "IND"
+}, {
+	"codigos": ["07", "57", "58."],
+	"materia": "QUIMICA ORGANICA Y BIOLOGICA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["72", "73."],
+	"materia": "RECURSOS NATURALES",
+	"carrera": "AGR"
+}, {
+	"codigos": ["110", "110."],
+	"materia": "SANIDAD DE SEMILLAS",
+	"carrera": "AGR"
+}, {
+	"codigos": ["33", "77", "79."],
+	"materia": "SILVICULTURA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["143", "143."],
+	"materia": "SISTEMAS AGROSILVOPASTORILES",
+	"carrera": "AGR"
+}, {
+	"codigos": ["I08"],
+	"materia": "SISTEMAS DE REPRESENTACION",
+	"carrera": "IND"
+}, {
+	"codigos": ["112", "112."],
+	"materia": "SISTEMATIZACION Y RIEGO EN EL CULTIVO DE ARROZ",
+	"carrera": "AGR"
+}, {
+	"codigos": ["103", "103."],
+	"materia": "SOJA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["93."],
+	"materia": "SOCIOLOGIA Y EXTENSION RURAL",
+	"carrera": "AGR"
+}, {
+	"codigos": ["24", "73", "75."],
+	"materia": "TERAPEUTICA VEGETAL",
+	"carrera": "AGR"
+}, {
+	"codigos": ["I13"],
+	"materia": "TERMODINAMICA Y MAQUINAS TERMICAS",
+	"carrera": "IND"
+}, {
+	"codigos": ["101", "101."],
+	"materia": "YERBA MATE",
+	"carrera": "AGR"
+}, {
+	"codigos": ["17", "64", "65."],
+	"materia": "ZOOLOGIA AGRICOLA",
+	"carrera": "AGR"
+}, {
+	"codigos": ["34", "79", "80."],
+	"materia": "ZOOTECNIA",
+	"carrera": "AGR"
+},{
+	"codigos": ["nomat_centro_estudiantes"],
+	"materia": "CENTRO DE ESTUDIANTES"
+},{
+	"codigos": ["nomat_externa"],
+	"materia": "PRESTAMO A EXTERNOS"
+}]

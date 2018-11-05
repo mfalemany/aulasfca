@@ -2,6 +2,7 @@
 namespace MRBS;
 
 use MRBS\Form\Form;
+use Adaptador;
 
 require "defaultincludes.inc";
 
@@ -72,7 +73,14 @@ function output_row($row)
   $values = array();
   // booking name
   $html_name = htmlspecialchars($row['name']);
-  $values[] = "<a title=\"$html_name\" href=\"view_entry.php?id=" . $row['entry_id'] . "\">$html_name</a>";
+
+  /* =============================================================================== */
+  $adaptador = new Adaptador();
+  $nombre = $adaptador->get_nombre_materia($html_name);
+  /* =============================================================================== */
+  
+  
+  $values[] = "<a title=\"$html_name\" href=\"view_entry.php?id=" . $row['entry_id'] . "\">$nombre</a>";
   // created by
   $values[] = htmlspecialchars($row['create_by']);
   // start time and link to day view
@@ -103,7 +111,6 @@ function output_row($row)
     echo "</td>\n</tr>\n";
   }
 }
-  
 // Get non-standard form variables
 $search_str = get_form_var('search_str', 'string');
 $search_pos = get_form_var('search_pos', 'int');
@@ -151,7 +158,6 @@ if (!isset($search_str))
 {
   $search_str = '';
 }
-  
 if (!$ajax)
 {
   print_header($day, $month, $year, $area, isset($room) ? $room : null, $search_str);
@@ -193,7 +199,13 @@ if (!$ajax)
   // now is used so that we only display entries newer than the current time
   echo "<h3>";
   echo get_vocab("search_results") . ": ";
-  echo "\"<span id=\"search_str\">" . htmlspecialchars($search_str) . "</span>\"";
+  
+  /* ======================================================================= */
+  $adaptador = new Adaptador();
+  $str_busqueda = $adaptador->get_nombre_materia($search_str);
+  /* ======================================================================= */
+
+  echo "\"<span id=\"search_str\">" . htmlspecialchars($str_busqueda) . "</span>\"";
   echo "</h3>\n";
 }  // if (!$ajax)
 
@@ -353,6 +365,7 @@ if (!$ajax)
   echo "<thead>\n";
   echo "<tr>\n";
   // We give some columns a type data value so that the JavaScript knows how to sort them
+ 
   echo "<th>" . get_vocab("namebooker") . "</th>\n";
   echo "<th>" . get_vocab("createdby") . "</th>\n";
   echo "<th><span class=\"normal\" data-type=\"title-numeric\">" . get_vocab("start_date") . "</span></th>\n";
@@ -386,3 +399,4 @@ else
   output_trailer();
 }
 
+ 
