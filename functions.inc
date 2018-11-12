@@ -2906,7 +2906,7 @@ function generate_global_uid($str)
 // Thanks to magentix at gmail dot com at http://php.net/manual/function.is-array.php
 function is_assoc($arr)
 {
-  return (is_array($arr) && count(array_filter(array_keys($arr),'is_string')) == count($arr));
+  return true;//(is_array($arr) && count(array_filter(array_keys($arr),'is_string')) == count($arr));
 }
 
 

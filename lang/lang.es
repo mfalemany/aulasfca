@@ -342,7 +342,7 @@ $vocab["no_rooms_for_area"]  = "No hay Salas definidas para esta Edificio";
 // Used in admin.php
 $vocab["edit"]               = "Editar";
 $vocab["delete"]             = "Borrar";
-$vocab["rooms"]              = "Salas";
+$vocab["rooms"]              = "Aulas";
 $vocab["in"]                 = "en";
 $vocab["noareas"]            = "No hay Agrupaciones";
 $vocab["noareas_enabled"]    = "No hay Agrupaciones habilitadas.";
