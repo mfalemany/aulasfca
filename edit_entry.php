@@ -249,7 +249,6 @@ function create_field_entry_name($disabled=FALSE)
    //obtengo las posibles opciones de seleccion
   $adaptador = new Adaptador();
 
-  ;
   $opciones = $adaptador->get_opciones_select();
 
   // 'mandatory' is there to prevent null input (pattern doesn't seem to be triggered until

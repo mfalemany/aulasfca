@@ -129,6 +129,7 @@ function map_add_booking ($entry, &$column, $start_first_slot, $start_last_slot)
     $column[$s][$n]["is_multiday_end"] = $is_multiday_end;
     $column[$s][$n]["status"] = $entry['status'];
     $column[$s][$n]["color"] = $entry['type'];
+
     $column[$s][$n]["start_time"] = hour_min($start_s);
     $column[$s][$n]["slots"] = NULL;  // to avoid undefined index NOTICE errors
     // if it's a multiple booking also fill in the name and description
@@ -334,6 +335,7 @@ function cell_html($cell, $query_strings, $is_invalid = FALSE)
                                             // and (b) each stripe is at least 1 unit high
     for ($n=0; $n<$n_bookings; $n++)
     {
+
       $id          = $cell[$n]["id"];
       $is_repeat   = $cell[$n]["is_repeat"];
       $is_multiday_start = $cell[$n]["is_multiday_start"];
@@ -342,7 +344,8 @@ function cell_html($cell, $query_strings, $is_invalid = FALSE)
       $color       = $cell[$n]["color"];
       $descr       = htmlspecialchars($cell[$n]["data"]);
       $long_descr  = htmlspecialchars($cell[$n]["long_descr"]);
-      $class = $color;
+      $class = $cell[$n]["id"];
+      //$class = $color;
       if ($status & STATUS_PRIVATE)
       {
         $class .= " private";
@@ -394,12 +397,13 @@ function cell_html($cell, $query_strings, $is_invalid = FALSE)
     $html .= "<tbody>\n";
     for ($n=0; $n<$n_bookings; $n++)
     {
+
       $id          = $cell[$n]["id"];
       $is_repeat   = $cell[$n]["is_repeat"];
       $is_multiday_start = $cell[$n]["is_multiday_start"];
       $is_multiday_end   = $cell[$n]["is_multiday_end"];
       $status      = $cell[$n]["status"];
-      $color       = $cell[$n]["color"];
+      $color       = '#222';//$cell[$n]["color"];
       $descr       = htmlspecialchars($cell[$n]["start_time"] . " " . $cell[$n]["data"]);
       $long_descr  = htmlspecialchars($cell[$n]["long_descr"]);
       $class = $color;
@@ -447,7 +451,8 @@ function cell_html($cell, $query_strings, $is_invalid = FALSE)
   else
   {  
     if(isset($cell[0]["id"]))
-    {       
+    {  
+
       $id         = $cell[0]["id"];
       $is_repeat  = $cell[0]["is_repeat"];
       $is_multiday_start = $cell[0]["is_multiday_start"];
@@ -495,7 +500,7 @@ function cell_html($cell, $query_strings, $is_invalid = FALSE)
       // JavaScript can turn them into resizable bookings
       if (getWritable($cell[0]['create_by'], $user, $cell[0]['room_id']))
       {
-        $c .= " writable";
+          $c .= " writable";
         if ($is_repeat)
         {
           $c .= " series";
@@ -536,19 +541,27 @@ function cell_html($cell, $query_strings, $is_invalid = FALSE)
       }
       else                 // if it is booked then show the booking
       {
-        $html .= "<div data-id=\"$id\" data-type=\"$color\" class=\"celldiv slots" .
+        /* ========================================================== */
+        $adaptador = new Adaptador();
+        //$materia = $adaptador->get_materia($descr);
+        //var_dump($materia);
+        $materia = $adaptador->get_materia($descr);
+        
+        
+        //$color = $adaptador->get_nombre_materia();
+        /* ========================================================== */
+        $html .= "<div data-id=\"$id\" data-type=\"$color\" class=\"celldiv clase_id_".$materia['id_materia']." slots" .
+       
 
                  (($times_along_top) ? "1" : $slots) .
                  "\">\n";
 
+         
+
         $html .= "<a href=\"view_entry.php?id=$id&amp;". $query_strings['booking'] . "\" title=\"$long_descr\">";
         $html .= ($is_repeat) ? "<img class=\"repeat_symbol $c\" src=\"images/repeat.png\" alt=\"" . get_vocab("series") . "\" title=\"" . get_vocab("series") . "\" width=\"10\" height=\"10\">" : '';
-        /* ========================================================== */
-        $adaptador = new Adaptador();
-        $nombre_reserva = $adaptador->get_nombre_materia($descr);
-        $nombre_reserva = ($nombre_reserva) ? $nombre_reserva : $descr;
-        /* ========================================================== */
-        $nombre_reserva = ucwords(strtolower($nombre_reserva));
+       
+        $nombre_reserva = ucwords(strtolower($materia['materia']." (".$descr.")"));
         $html .= "$nombre_reserva</a>\n";
         //$html .= "$descr</a>\n";
         
@@ -631,6 +644,7 @@ function day_cell_html($text, $link, $date)
 // data['name'] and data['value'].
 function tdcell($colclass, $slots)
 {
+
   global $times_along_top;
   
   $html = '';
@@ -771,6 +785,8 @@ function day_table_innerhtml($day, $month, $year, $room_id, $area_id, $timetohig
   $is_possibly_invalid = !$enable_periods && is_possibly_invalid($start_first_slot, $start_last_slot);
   
   $entries = get_entries_by_area($area_id, $start_first_slot, $start_last_slot + $resolution);
+  
+
   
   // We want to build an array containing all the data we want to show
   // and then spit it out. 

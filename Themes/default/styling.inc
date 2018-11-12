@@ -1,6 +1,5 @@
 <?php
 namespace MRBS;
-
 // DEFAULT THEME
 
 // ***** COLOURS ************************
@@ -77,6 +76,7 @@ $multiple_control_color         = "#ffff22";        // background colour for the
 
 // These are the colours used for distinguishing between the dfferent types of bookings in the main
 // displays in the day, week and month views
+
 $color_types = array(
     'A' => "#ffff99",
     'B' => "#99cccc",
@@ -87,7 +87,9 @@ $color_types = array(
     'G' => "#ccffcc",
     'H' => "#d9d982",
     'I' => "#74b3dc",
-    'J' => "#e6ffe6"); 
+    'J' => "#e6ffe6",
+    'K' => "#2fcc51");
+
 
 // colours used for pending.php and bookings awaiting approval
 $outstanding_color         = "#FFF36C"; // font colour for the outstanding reservations message in the header

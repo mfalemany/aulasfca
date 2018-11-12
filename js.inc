@@ -162,7 +162,7 @@ if (in_array($page, array('day', 'week', 'month')))
 if (in_array($page, array('day', 'week')))
 {
   ?>
-  <script type="text/javascript" src="js/resizable.js.php?<?php echo $standard_query_string ?>"></script>
+  <!-- <script type="text/javascript" src="js/resizable.js.php?<?php echo $standard_query_string ?>"></script> -->
   <script type="text/javascript" src="js/multiple.js.php?<?php echo $standard_query_string ?>"></script>
   <?php
 }

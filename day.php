@@ -14,7 +14,6 @@ if (!checkAuthorised($just_check = $ajax))
 {
   exit;
 }
-
 $inner_html = day_table_innerhtml($day, $month, $year, $room, $area, $timetohighlight);
 
 if ($ajax)

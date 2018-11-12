@@ -1,13 +1,25 @@
 <?php
 namespace MRBS;
-
-use MRBS\Form\Form;
 use Adaptador;
+use MRBS\Form\Form;
 
 function print_head($simple=false)
 {
   echo "<head>\n";
-  
+
+
+/* ==================== GENERO ESTILOS PARA DISTINTOS COLORES POR MATERIA  ===========================*/
+/* Esto funciona en coordinacion con el archivo functions_table.inc, donde se imprime la clase con el id de la materia reservada */
+$a = new Adaptador;
+$colores = $a->get_colores();
+echo "<style type='text/css'>";
+foreach ($colores as $id_materia => $color) {
+    echo ".clase_id_".$id_materia."{ background-color: ".$color.";}";
+}
+echo "</style>";
+
+/* ==================== GENERO ESTILOS PARA DISTINTOS COLORES POR MATERIA  ===========================*/
+
   echo "<meta charset=\"" . get_charset() . "\">\n";
   // Set IE=edge so that IE10 will display MRBS properly, even if compatibility mode is used
   // on the browser.  If we don't do this then MRBS will treat IE10 as an unsupported browser
@@ -135,6 +147,10 @@ function print_rooms($query_string)
 {
   echo "<a href=\"admin.php?$query_string\">" . get_vocab("rooms") . "</a>\n";
 }
+function print_materias()
+{
+  echo "<a href=\"materias.php\">Materias</a>\n";
+}
 
 
 function print_report($query_string)
@@ -161,7 +177,7 @@ function print_search($day, $month, $year, $area, $room, $search_str=null)
 
     // 'mandatory' is there to prevent null input (pattern doesn't seem to be triggered until
     // there is something there).
-   $params = array('label'      => '',
+   $params = array( 'label'      => '',
                     'name'       => 'search_str',
                     'type'       => 'text',
                     'options'    => $opciones,
@@ -215,6 +231,8 @@ function print_nav($day, $month, $year, $area, $room, $search_str=null, $simple=
     
     echo "<li>\n";
     print_rooms($query_string);
+    echo "<hr>";
+    print_materias();
     echo "</li>\n";
     
     echo "<li>\n";
