@@ -11,6 +11,8 @@ class Adaptador{
 	function __construct()
 	{
 		$this->conectar_db();
+		//$this->ejecutar_carga_materias();
+		//$this->conectar_db();
 	}
 
 	function conectar_db()
@@ -39,6 +41,9 @@ class Adaptador{
 
 	function get_materia($id_materia)
 	{
+		if(!is_numeric($id_materia)){
+			return array();
+	}
 		$sql = "SELECT * FROM materias WHERE id_materia = ".$this->quote($id_materia);
 		$resultado = $this->db->query($sql);
 		return $resultado->all_rows_keyed()[0];
@@ -160,21 +165,32 @@ class Adaptador{
 
 	function nueva_materia($detalles)
 	{
+		//var_dump($detalles);
 		$obligs = array('materia','es_materia','carrera');
 		$campos = array();
 		$valores = array();
 		try {
 			//verifico que recibí todos los campos obligatorios
-			foreach ($obligs as $campo) {
+			/*foreach ($obligs as $campo) {
 				if(!array_key_exists($campo,$detalles)){
 					throw new Exception('No se recibieron todos los datos obligatorios: falta $campo');
 				}
-			}	
+		}*/	
 			//separo los codigos en un nuevo array (y el id de la materia)
-			$codigos = (strlen($detalles['codigos']) > 0) ? explode(',',$detalles['codigos']) : array();
+			if(isset($detalles['codigos'])){
+				if(is_array($detalles['codigos'])){
+					$cods = implode(',',$detalles['codigos']);
+				}else{
+					$cods = $detalles['codigos'];
+				}
+				$codigos = (strlen($cods) > 0) ? explode(',',$cods) : array();
+				unset($detalles['codigos']);
+			}else{
+				$codigos = array();
+			}
 			
 			//elimino indices innecesarios
-			unset($detalles['codigos']);
+			//unset($detalles['codigos']);
 			unset($detalles['id_materia']);
 			
 			//paso a mayusculas el nombre de la materia (como le gusta a PINITO!);
@@ -189,7 +205,7 @@ class Adaptador{
 			$valores = implode(',',$valores);
 			
 			$sql = "INSERT INTO materias ($campos) VALUES ($valores)";
-			
+			//echo $sql;
 			
 			//si se guarda la materia, guardo los códigos
 			if($this->db->command($sql)){
@@ -215,6 +231,7 @@ class Adaptador{
 	{
 		$codigo = substr($codigo,0,5);
 		$sql = "INSERT INTO materias_codigos VALUES ('$id_materia','$codigo')";
+		//echo $sql;
 		return $this->db->command($sql);
 	}
 
@@ -246,12 +263,12 @@ class Adaptador{
 		foreach($this->materias as $materia){
 
 			$carrera = array_key_exists('carrera',$materia) ? $materia['carrera'] : '---';
-			$this->nueva_materia($materia['materia'],$carrera);
+			$this->nueva_materia($materia);
 			$id_materia = $this->db->insert_id('materias', 'id_materia');
 			
-			foreach($materia['codigos'] as $codigo){
+			/*foreach($materia['codigos'] as $codigo){
 				$this->nuevo_codigo_materia($id_materia,$codigo);
-			}
+			}*/
 		}
 		die;
 	}
