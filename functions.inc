@@ -1275,6 +1275,7 @@ function generate_checkbox_group($params)
 //                        or an array of values.
 function generate_options($options, $force_assoc=false, $value='')
 {
+
   if (!is_array($value))
   {
     $value = array($value);
@@ -1284,15 +1285,18 @@ function generate_options($options, $force_assoc=false, $value='')
   
   foreach ($options as $key => $text)
   {
+    $es_materia = substr($key, 0,1);
+    $key = substr($key, 1,strlen($key)-1);
     // We can cope with both associative and ordinary arrays
     if (!$force_assoc && !is_assoc($options))
     {
       $key = $text;
     }
-    $style = (substr($key,0,5) == 'nomat') ? 'background-color:#09426f;color:#FFF;' : '';
+    $style = ($es_materia == 'N') ? 'background-color:#09426f;color:#FFF;' : '';
     $html .= "<option style='$style' value=\"" . htmlspecialchars($key) . "\"";
     $html .= (in_array($key, $value)) ? " selected=\"selected\"" : '';
     $html .= ">".htmlspecialchars($text)."</option>\n";
+
   }
   
   return $html;

@@ -1,6 +1,7 @@
 <?php 
 	namespace MRBS;
-	require "defaultincludes.inc";
+	require_once "defaultincludes.inc";
+	require_once "functions.inc";
 	use Adaptador;
 
 	//obtengo una adaptador
@@ -103,11 +104,15 @@
 	<fieldset>
 		<legend>Seleccione una materia para modificar</legend>
 		<form action="materias.php" method="post">
-			<select name="materia_busqueda">
-			<?php foreach($opciones as $indice => $opcion) : ?>
-				<option value="<?php echo $indice; ?>" <?php echo ($indice == $materia_busqueda) ? "SELECTED":''; ?>><?php echo $opcion; ?></option>
-			<?php endforeach; ?>	
-			</select>
+			<?php 
+			$params = array( 'label' => '',
+                    'name'       => 'materia_busqueda',
+                    'type'       => 'text',
+                    'options'    => $opciones,
+                    'pattern'    => REGEX_TEXT_POS
+                    );
+		    generate_select($params);
+			?>
 			<input type="submit" value="Editar">
 		</form>
 	</fieldset>

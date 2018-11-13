@@ -97,11 +97,11 @@ class Adaptador{
 
 	function get_opciones_select($solo_materias=false)
 	{
-		$sql = "SELECT id_materia, materia FROM materias";
+		$sql = "SELECT id_materia, materia, es_materia FROM materias";
 		$sql = ($solo_materias) ? $sql." AND es_materia = 'S'" : $sql;
 		$resultado = $this->db->query($sql)->all_rows_keyed();
 		foreach($resultado as $materia){	
-			$opciones[$materia['id_materia']] = $materia['materia'];
+			$opciones[$materia['es_materia'].$materia['id_materia']] = $materia['materia'];
 		}
 		asort($opciones);
     

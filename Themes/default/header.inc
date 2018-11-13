@@ -174,7 +174,7 @@ function print_search($day, $month, $year, $area, $room, $search_str=null)
    //obtengo las posibles opciones de seleccion
     $adaptador = new Adaptador();
     $opciones = $adaptador->get_opciones_select();
-
+//var_dump($opciones); die;
     // 'mandatory' is there to prevent null input (pattern doesn't seem to be triggered until
     // there is something there).
    $params = array( 'label'      => '',
