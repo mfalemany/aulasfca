@@ -248,7 +248,7 @@ function create_field_entry_name($disabled=FALSE)
  
    //obtengo las posibles opciones de seleccion
   $adaptador = new Adaptador();
-
+  echo $adaptador->generar_select('Materia','name',$name);/*
   $opciones = $adaptador->get_opciones_select();
 
   // 'mandatory' is there to prevent null input (pattern doesn't seem to be triggered until
@@ -265,7 +265,7 @@ function create_field_entry_name($disabled=FALSE)
                   
   //generate_input($params);
   //echo get_class(db());
-  generate_select($params);
+  generate_select($params);*/
   echo "</div>\n";
 }
 

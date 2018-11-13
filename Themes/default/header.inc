@@ -29,7 +29,7 @@ echo "</style>";
   // conditional comments.  So we have to do it in a <meta> tag, after the conditional comments
   // around the <html> tags.
   echo "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n";
-  
+  echo "<link rel='shortcut icon' href='/aulas/favicon.ico'/>";
   if (!$simple)
   {
     // Add the CSRF token so that JavaScript can use it
@@ -173,11 +173,15 @@ function print_search($day, $month, $year, $area, $room, $search_str=null)
  
    //obtengo las posibles opciones de seleccion
     $adaptador = new Adaptador();
-    $opciones = $adaptador->get_opciones_select();
+    echo $adaptador->generar_select('','search_str',$search_str);
+
+   
+
+
 //var_dump($opciones); die;
     // 'mandatory' is there to prevent null input (pattern doesn't seem to be triggered until
     // there is something there).
-   $params = array( 'label'      => '',
+  /* $params = array( 'label'      => '',
                     'name'       => 'search_str',
                     'type'       => 'text',
                     'options'    => $opciones,
@@ -185,7 +189,21 @@ function print_search($day, $month, $year, $area, $room, $search_str=null)
                     );
 
                     
-    generate_select($params);
+    generate_select($params);*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   echo "<input type=\"submit\" value=\"Buscar\">\n";
  // echo "<input type=\"search\" name=\"search_str\" value=\"" . htmlspecialchars($search_str) . "\" required>\n";
   echo "<input type=\"hidden\" name=\"day\" value=\"$day\">\n";

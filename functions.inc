@@ -1285,15 +1285,12 @@ function generate_options($options, $force_assoc=false, $value='')
   
   foreach ($options as $key => $text)
   {
-    $es_materia = substr($key, 0,1);
-    $key = substr($key, 1,strlen($key)-1);
     // We can cope with both associative and ordinary arrays
     if (!$force_assoc && !is_assoc($options))
     {
       $key = $text;
     }
-    $style = ($es_materia == 'N') ? 'background-color:#09426f;color:#FFF;' : '';
-    $html .= "<option style='$style' value=\"" . htmlspecialchars($key) . "\"";
+    $html .= "<option value=\"" . htmlspecialchars($key) . "\"";
     $html .= (in_array($key, $value)) ? " selected=\"selected\"" : '';
     $html .= ">".htmlspecialchars($text)."</option>\n";
 
@@ -2910,7 +2907,7 @@ function generate_global_uid($str)
 // Thanks to magentix at gmail dot com at http://php.net/manual/function.is-array.php
 function is_assoc($arr)
 {
-  return true;//(is_array($arr) && count(array_filter(array_keys($arr),'is_string')) == count($arr));
+ return (is_array($arr) && count(array_filter(array_keys($arr),'is_string')) == count($arr));
 }
 
 

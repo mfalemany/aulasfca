@@ -33,8 +33,7 @@
 		}
 	}
 
-	//Listado de opciones para el combo de seleccion
-	$opciones = $a->get_opciones_select();
+	
 	//Extraigo las variables contenidas en $_POST
 	extract($_POST);
 	//Por defecto, la variable materia no contiene nada
@@ -105,13 +104,7 @@
 		<legend>Seleccione una materia para modificar</legend>
 		<form action="materias.php" method="post">
 			<?php 
-			$params = array( 'label' => '',
-                    'name'       => 'materia_busqueda',
-                    'type'       => 'text',
-                    'options'    => $opciones,
-                    'pattern'    => REGEX_TEXT_POS
-                    );
-		    generate_select($params);
+			echo $a->generar_select('materia_busqueda');
 			?>
 			<input type="submit" value="Editar">
 		</form>

@@ -1,13 +1,6 @@
-<?php  /*
+<?php  
 namespace MRBS;
 require "../defaultincludes.inc";
-
-use Adaptador;
-$a = new Adaptador();
-
-$colores = $a->get_colores();
-
-
 
 http_headers(array("Content-type: application/x-javascript"),
              60*30);  // 30 minute expiry
@@ -1237,7 +1230,7 @@ init = function(args) {
                       .css('position', 'absolute')
                       .css('top', '0')
                       .css('left', '0')
-                      .css('background-color', '<?php echo $colores[5]; ?>')
+                      .css('background-color', 'auto')
                       .css('max-height', 'none')
                       .css('min-height', '<?php echo $main_cell_height ?>px')
                       .addClass('clone')

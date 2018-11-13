@@ -95,17 +95,29 @@ class Adaptador{
 		return "'".$elemento."'";
 	}
 
-	function get_opciones_select($solo_materias=false)
+	function generar_select($etiqueta, $name, $seleccionado='', $solo_materias=false)
 	{
+
 		$sql = "SELECT id_materia, materia, es_materia FROM materias";
 		$sql = ($solo_materias) ? $sql." AND es_materia = 'S'" : $sql;
 		$resultado = $this->db->query($sql)->all_rows_keyed();
 		foreach($resultado as $materia){	
-			$opciones[$materia['es_materia'].$materia['id_materia']] = $materia['materia'];
+			$opciones[$materia['id_materia']] = array('materia'=>$materia['materia'],'es_materia'=>$materia['es_materia']);
 		}
 		asort($opciones);
-    
-		return $opciones;
+    	/* -----------------------------------------------------*/
+    	$select = '';
+    	if(strlen($etiqueta)){
+    		$select .= "<div>$etiqueta:</div>";
+    	}
+		$select .= "<select name='$name'>";
+	    foreach ($opciones as $clave => $opcion) {
+	      $clase = ($opcion['es_materia'] == 'N') ? "style='background-color:#313f84;color:#FFF'" : '';
+	      $selected = ($clave == $seleccionado) ? 'selected' : '';
+	      $select .= "<option $clase value='$clave' $selected>".$opcion['materia']."</option>";
+	    }
+	    $select .= "</select>";
+	    return $select;
 	}
 
 
