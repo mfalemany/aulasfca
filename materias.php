@@ -104,7 +104,7 @@
 		<legend>Seleccione una materia para modificar</legend>
 		<form action="materias.php" method="post">
 			<?php 
-			echo $a->generar_select('materia_busqueda');
+			echo $a->generar_select('Seleccione una materia para editar','materia_busqueda',$materia_busqueda);
 			?>
 			<input type="submit" value="Editar">
 		</form>
