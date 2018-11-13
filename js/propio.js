@@ -26,6 +26,11 @@ function invertColor(hex, bw) {
     // pad each with zeros and return
     return "#" + padZero(r) + padZero(g) + padZero(b);
 }
+function padZero(str, len) {
+    len = len || 2;
+    var zeros = new Array(len).join('0');
+    return (zeros + str).slice(-len);
+}
 //Function to convert hex format to a rgb color
 function rgb2hex(rgb){
  rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
@@ -34,10 +39,16 @@ function rgb2hex(rgb){
   ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
   ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
 }
-$(document).ready(function(){
+
+ $(document).ready(function(){
+    
     $('.I a').each(function(indice,elemento){
-        bg_rgb = $(elemento).css('background-color');
+        bg_rgb = $(elemento).parent().css('background-color');
+        
         bg_hex = rgb2hex(bg_rgb);
+
         $(elemento).css({'color':invertColor(bg_hex,true)});
+        
     })
+    
 });

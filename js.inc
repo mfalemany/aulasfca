@@ -98,7 +98,7 @@ if (NULL !== ($datepicker_lang_file = get_datepicker_lang_file('jquery/ui/i18n')
 <script type="text/javascript" src="js/functions.js.php?<?php echo $standard_query_string ?>"></script>
 <script type="text/javascript" src="js/datepicker.js.php?<?php echo $standard_query_string ?>"></script>
 <script type="text/javascript" src="js/general.js.php?<?php echo $standard_query_string ?>"></script>
-<script type="text/javascript" src="js/propio.js"></script>
+
 
     
 <?php
@@ -220,3 +220,4 @@ $(window).on('load', function() {
 
 //]]>
 </script>
+<script type="text/javascript" src="js/propio.js"></script>
