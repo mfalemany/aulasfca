@@ -141,6 +141,9 @@ class Adaptador{
 		//paso a mayusculas el nombre de la materia (como le gusta a PINITO!);
 		$detalles['materia'] = strtoupper($detalles['materia']);
 
+		if(!isset($detalles['es_materia'])){
+			$detalles['es_materia'] = 'N';
+		}
 		//armo los campos y valores para el insert
 		foreach ($detalles as $campo => $valor) {
 			$campos[] = $campo." = ".$this->quote($valor);
