@@ -22,6 +22,9 @@ http_headers(array("Content-type: text/css"),
 *{
   font-family: tahoma;
 }
+.I a{
+  font-size: 0.9em;
+}
 body {
   font-size: small;
   margin: 0;
