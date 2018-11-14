@@ -51,4 +51,14 @@ function rgb2hex(rgb){
         
     })
     
+
+
+    
 });
+
+ function agrandar(){
+    $('#day_main').css({'width':$('#day_main').width()*1.5});
+ }
+ function achicar(){
+    $('#day_main').css({'width':'100%'});
+ }

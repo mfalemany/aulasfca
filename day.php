@@ -97,7 +97,8 @@ $before_after_links_html = "
   <a class=\"date_now\" href=\"$href_now\">" . get_vocab("gototoday") . "</a>
   <a class=\"date_after\" href=\"$href_after\">" . get_vocab("dayafter") . "</a>
 </nav>\n";
-
+    
+echo "<div style='text-align:center;'>Vista: <span onclick='agrandar()'>Grande</span> || <span onclick='achicar()'>Normal</span></div>";
 // and output them
 echo $before_after_links_html;
 
