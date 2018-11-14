@@ -98,7 +98,7 @@ $before_after_links_html = "
   <a class=\"date_after\" href=\"$href_after\">" . get_vocab("dayafter") . "</a>
 </nav>\n";
     
-echo "<div style='text-align:center;'><span class='modif_tamano' onclick='agrandar()'>Grande</span><span class='modif_tamano' onclick='achicar()'>Normal</span></div>";
+echo "<div class=\"screenonly\" style='text-align:center;'><span class='modif_tamano' onclick='agrandar()'>Grande</span><span class='modif_tamano' onclick='achicar()'>Normal</span><span class='modif_tamano' style='background-color:#ce4949; color:#FFF;' onclick='window.print()'>Imprimir</span></div>";
 // and output them
 echo $before_after_links_html;
 
@@ -108,7 +108,7 @@ echo "</table>\n";
   
 echo $before_after_links_html;
 
-show_colour_key();
+//show_colour_key();
 // Draw the three month calendars
 if ($display_calendar_bottom)
 {
