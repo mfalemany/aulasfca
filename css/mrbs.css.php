@@ -25,6 +25,18 @@ http_headers(array("Content-type: text/css"),
 .I a{
   font-size: 0.9em;
 }
+.modif_tamano{
+  padding: 1px 15px;
+  background-color: #4b667b;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #FFF;
+  margin-right: 10px;
+}
+.modif_tamano:hover{
+  box-shadow:1px 1px 1px #222;
+}
+
 body {
   font-size: small;
   margin: 0;
