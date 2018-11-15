@@ -2,6 +2,7 @@
 namespace MRBS;
 
 use MRBS\Form\Form;
+use Adaptador;
 
 require "defaultincludes.inc";
 
@@ -693,7 +694,9 @@ function output_body_rows(&$rows, $format)
   echo (($format == OUTPUT_HTML) && !$ajax) ? "<tbody>\n" : "";
   foreach ($rows as $row)
   {
+    /* ============================================================================================= */
     output_row($row, $format, TRUE);
+    /* ============================================================================================= */
   }
   echo (($format == OUTPUT_HTML) && !$ajax) ? "</tbody>\n" : "";
 }
@@ -1515,7 +1518,9 @@ if ($phase == 2)
 
   // echo "<p>DEBUG: SQL: <tt> $sql </tt></p>\n";
 
+
   $res = db()->query($sql, $sql_params);
+
   $nmatch = $res->count();
 }
 
@@ -1649,8 +1654,13 @@ if ($phase == 2)
       open_report();
       report_header();
       $body_rows = array();
+      /*************************************************************************************** */
+      $a = new Adaptador;
+      $materias = $a->get_nombres_materias();
+      /*************************************************************************************** */
       for ($i = 0; ($row = $res->row_keyed($i)); $i++)
       {
+        $row['name'] = $materias[$row['name']];
         report_row($body_rows, $row);
       }
       output_body_rows($body_rows, $output_format);

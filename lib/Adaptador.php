@@ -67,6 +67,25 @@ class Adaptador{
 		return $colores;
 	}
 
+	function get_nombres_materias()
+	{
+		$sql = "SELECT id_materia,materia FROM materias";
+		$resultado = $this->db->query($sql)->all_rows_keyed();
+		foreach ($resultado as $materia) {
+			$materias[$materia['id_materia']] = $materia['materia'];
+		}
+		
+		return $materias;
+
+	}
+
+	function eliminar_acentos($string)
+	{
+		return str_replace(array('á','é','í','ó','ú','Á','É','Í','Ó','Ú'),array('a','e','i','o','u','A','E','I','O','U'),$string);
+	}
+
+
+
 	function get_nombre_materia($id_materia)
 	{
 		$codigos = explode(',',$id_materia);

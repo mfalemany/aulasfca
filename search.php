@@ -66,7 +66,7 @@ function generate_search_nav_html($search_pos, $total, $num_records, $search_str
 }
 
 
-function output_row($row)
+function output_row($row,$params=array())
 {
   global $ajax, $json_data;
   
@@ -74,13 +74,12 @@ function output_row($row)
   // booking name
   $html_name = htmlspecialchars($row['name']);
 
-  /* =============================================================================== */
-  $adaptador = new Adaptador();
-  $nombre = $adaptador->get_nombre_materia($html_name);
-  /* =============================================================================== */
+ $par = implode(',',$params);
   
   
-  $values[] = "<a title=\"$html_name\" href=\"view_entry.php?id=" . $row['entry_id'] . "\">$nombre</a>";
+  /* ==================================================================================================================== */
+  $values[] = "<a title=\"$html_name\" href=\"view_entry.php?id=" . $row['entry_id'] . "\">".$params['materia']."</a>";
+  /* ==================================================================================================================== */
   // created by
   $values[] = htmlspecialchars($row['create_by']);
   // start time and link to day view
@@ -94,7 +93,9 @@ function output_row($row)
   {
     list(,$link_str) = period_date_string($row['start_time'], $row['area_id']);
   }
-  $link .= htmlspecialchars($link_str) ."</a>";
+  /* ==================================================================================================================== */
+  $link .= htmlspecialchars($link_str) . " en " . $params['aula'] . "</a>";
+  /* ==================================================================================================================== */
   //    add a span with the numeric start time in the title for sorting
   $values[] = "<span title=\"" . $row['start_time'] . "\"></span>" . $link;
   // description
@@ -111,6 +112,12 @@ function output_row($row)
     echo "</td>\n</tr>\n";
   }
 }
+
+ /* =============================================================================== */
+  $adaptador = new Adaptador();
+  $materias = $adaptador->get_nombres_materias();
+  /* =============================================================================== */
+
 // Get non-standard form variables
 $search_str = get_form_var('search_str', 'string');
 $search_pos = get_form_var('search_pos', 'int');
@@ -160,6 +167,9 @@ if (!isset($search_str))
 }
 if (!$ajax)
 {
+  /* ===================================================================================== */
+  //  $aula = $adaptador->eliminar_acentos($aulas[$room]);
+  /* ===================================================================================== */
   print_header($day, $month, $year, $area, isset($room) ? $room : null, $search_str);
 
   if (!empty($advanced))
@@ -200,12 +210,8 @@ if (!$ajax)
   echo "<h3>";
   echo get_vocab("search_results") . ": ";
   
-  /* ======================================================================= */
-  $adaptador = new Adaptador();
-  $str_busqueda = $adaptador->get_nombre_materia($search_str);
-  /* ======================================================================= */
-
-  echo "\"<span id=\"search_str\">" . htmlspecialchars($str_busqueda) . "</span>\"";
+  echo "\"<span id=\"search_str\">" . htmlspecialchars($materias[$search_str]) . "</span>\"";
+  //echo "\"<span id=\"search_str\">" . htmlspecialchars($materias[$search_str]) . "</span>\"";
   echo "</h3>\n";
 }  // if (!$ajax)
 
@@ -216,9 +222,11 @@ $now = mktime(0, 0, 0, $month, $day, $year);
 // NOTE: syntax_caseless_contains() modifies our SQL params for us
 
 $sql_params = array();
+/* ========================================================================================== */
 $sql_pred = "(( " . db()->syntax_caseless_contains("E.create_by", $search_str, $sql_params)
-  . ") OR (" . db()->syntax_caseless_contains("E.name", $search_str, $sql_params)
+  . ") OR (E.name = '".$search_str."'"
   . ") OR (" . db()->syntax_caseless_contains("E.description", $search_str, $sql_params). ")";
+  /* ========================================================================================== */
 
 // Also need to search custom fields (but only those with character data,
 // which can include fields that have an associative array of options)
@@ -328,11 +336,12 @@ else if($search_pos >= $total)
 if (!$ajax_capable || $ajax)
 {
   // Now we set up the "real" query
-  $sql = "SELECT E.id AS entry_id, E.create_by, E.name, E.description, E.start_time,
+  $sql = "SELECT E.id AS entry_id, E.create_by, E.name, E.description, E.start_time, R.room_name,
                  R.area_id, A.enable_periods
             FROM $tbl_entry E, $tbl_room R, $tbl_area A
            WHERE $sql_pred
         ORDER BY E.start_time asc";
+
   // If it's an Ajax query we want everything.  Otherwise we use LIMIT to just get
   // the stuff we want.
   if (!$ajax)
@@ -378,17 +387,21 @@ if (!$ajax)
 // If we're Ajax capable and this is not an Ajax request then don't ouput
 // the table body, because that's going to be sent later in response to
 // an Ajax request
+
 if (!$ajax_capable || $ajax)
 {
   for ($i = 0; ($row = $result->row_keyed($i)); $i++)
   {
-    output_row($row);
+    
+    output_row($row,array('materia'=>$materias[$row['name']],'aula' => $row['room_name']) );
   }
 }
 
 if ($ajax)
 {
   http_headers(array("Content-Type: application/json"));
+  
+  //echo "console.log(".$json_data.")";
   echo json_encode($json_data);
 }
 else
