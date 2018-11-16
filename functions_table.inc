@@ -561,7 +561,7 @@ function cell_html($cell, $query_strings, $is_invalid = FALSE)
         $html .= "<a href=\"view_entry.php?id=$id&amp;". $query_strings['booking'] . "\" title=\"$long_descr\">";
         $html .= ($is_repeat) ? "<img class=\"repeat_symbol $c\" src=\"images/repeat.png\" alt=\"" . get_vocab("series") . "\" title=\"" . get_vocab("series") . "\" width=\"10\" height=\"10\">" : '';
        
-        $nombre_reserva = ucwords(strtolower($materia['materia']));
+        $nombre_reserva = $materia['materia'];
         $html .= "$nombre_reserva</a>\n";
         //$html .= "$descr</a>\n";
         
@@ -1289,6 +1289,6 @@ function week_table_innerhtml($day, $month, $year, $room_id, $area_id, $timetohi
     }
   }  // end standard view (for the body)
   $tbody .= "</tbody>\n";
-  
+
   return $thead . $tfoot . $tbody;
 }
