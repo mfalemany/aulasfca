@@ -35,6 +35,12 @@ class Adaptador{
 		return $resultado->all_rows_keyed()[0];
 	}
 
+	function get_nombre_materia($id_materia)
+	{
+		$materia = $this->get_materia($id_materia);
+		return (count($materia)) ? $materia['materia'] : 'Materia no encontrada';
+	}
+
 	function get_nombres_materias()
 	{
 		$sql = "SELECT id_materia,materia FROM materias";
