@@ -157,9 +157,6 @@ class Adaptador{
 		unset($detalles['codigos']);
 		unset($detalles['id_materia']);
 		
-		//paso a mayusculas el nombre de la materia (como le gusta a PINITO!);
-		$detalles['materia'] = strtoupper($detalles['materia']);
-
 		if(!isset($detalles['es_materia'])){
 			$detalles['es_materia'] = 'N';
 		}
