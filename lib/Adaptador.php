@@ -100,9 +100,6 @@ class Adaptador{
 			//unset($detalles['codigos']);
 			unset($detalles['id_materia']);
 			
-			//paso a mayusculas el nombre de la materia (como le gusta a PINITO!);
-			$detalles['materia'] = strtoupper($detalles['materia']);
-
 			//armo los campos y valores para el insert
 			foreach ($detalles as $campo => $valor) {
 				$campos[] = $campo;
@@ -138,19 +135,9 @@ class Adaptador{
 		$sql = "DELETE FROM materias_codigos WHERE id_materia = ".$this->quote($detalles['id_materia']);
 		$this->db->command($sql);
 
-
 		if(isset($detalles["codigos"]) && strlen(trim($detalles["codigos"])) > 0 ){
-			$codigos = explode(',',$detalles["codigos"]);
-			foreach ($codigos as $codigo) {
-				if($this->existe_codigo($codigo)){
-					return false;
-				}
-			}
-		} 
-		
-
-		//separo los codigos en un nuevo array (y el id de la materia)
-		$codigos = explode(',',$detalles['codigos']);
+			$codigos = explode(',',$detalles['codigos']);
+		}
 		
 		//elimino indices innecesarios
 		$id_materia = $detalles['id_materia'];
@@ -169,10 +156,11 @@ class Adaptador{
 		$sql = "UPDATE materias SET $campos WHERE id_materia = ".$id_materia;
 		//si se guarda la materia, guardo los códigos
 		if($this->db->command($sql)){
-
-			foreach ($codigos as $codigo) {
-				if(!$this->nuevo_codigo_materia($id_materia,$codigo)){
-					return false;
+			if(isset($codigos)){
+				foreach ($codigos as $codigo) {
+					if(!$this->nuevo_codigo_materia($id_materia,$codigo)){
+						return false;
+					}
 				}
 			}
 			return TRUE;
