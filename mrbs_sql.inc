@@ -1,5 +1,6 @@
 <?php
 namespace MRBS;
+use Adaptador;
 
 define('INTERVAL_DAY', 0);
 
@@ -84,13 +85,19 @@ function mrbsCheckFree(&$booking, $ignore, $repignore)
     {
        $row['name'] = get_vocab("unavailable");
     }
+    /* ============================================================================================== */
+    $a = new Adaptador();
+    $materias = $a->get_nombres_materias();
+    /* ============================================================================================== */
 
     // enclose  the viewday etc. links in a span to make it easier for JavaScript to strip them out
-    $err[] = "<a href=\"view_entry.php?id=".$row['id']."\">".$row['name']."</a>"
+    /* ============================================================================================== */
+    $err[] = "<a href=\"view_entry.php?id=".$row['id']."\">".$materias[$row['name']]."</a>"
       . " (" . $startstr . ', ' . $row['room_name'] .") "
       . "<span>(<a href=\"day.php?$param_ymd\">".get_vocab("viewday")."</a>"
       . " | <a href=\"week.php?room=$room_id&amp;$param_ymd\">".get_vocab("viewweek")."</a>"
       . " | <a href=\"month.php?room=$room_id&amp;$param_ym\">".get_vocab("viewmonth")."</a>)</span>";
+    /* ============================================================================================== */
   }
 
   return $err;
