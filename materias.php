@@ -4,6 +4,13 @@
 	require_once "functions.inc";
 	use Adaptador;
 
+	// Check the user is authorised for this page
+	checkAuthorised();
+	// Also need to know whether they have admin rights
+	$user = getUserName();
+	$required_level = (isset($max_level) ? $max_level : 2);
+	$is_admin = (authGetUserLevel($user) >= $required_level);
+
 	//obtengo una adaptador
 	$a = new Adaptador();
 
