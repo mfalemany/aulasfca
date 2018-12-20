@@ -1,11 +1,12 @@
 <?php
 namespace MRBS;
-
+use Adaptador;
 // mrbs/month.php - Month-at-a-time view
 
 require "defaultincludes.inc";
 require_once "mincals.inc";
 require_once "functions_table.inc";
+
 
 // 3-value compare: Returns result of compare as "< " "= " or "> ".
 function cmp3($a, $b)
@@ -300,6 +301,12 @@ function month_table_innerhtml($day, $month, $year, $room, $area)
       {
         $html .= "<div class=\"booking_list\">\n";
         $n = count($d[$cday]["id"]);
+        /* ========================================== INICIO MODIFICACION =================================== */
+        $a = new Adaptador();
+        $mat = $a->get_nombres_materias();
+        $colores = $a->get_colores();
+        /* ========================================== FIN MODIFICACION =================================== */
+        //var_dump($mat);
         // Show the start/stop times, 1 or 2 per line, linked to view_entry.
         for ($i = 0; $i < $n; $i++)
         {
@@ -319,11 +326,19 @@ function month_table_innerhtml($day, $month, $year, $room, $area)
             $class .= " tentative";
           }
           $class .= " $monthly_view_entries_details";
-          $html .= "<div class=\"" . $class . "\">\n";
+          
+          
+
+          
           $booking_link = "view_entry.php?id=" . $d[$cday]["id"][$i] . "&amp;day=$cday&amp;month=$month&amp;year=$year";
           $slot_text = $d[$cday]["data"][$i];
           $description_text = utf8_substr($d[$cday]["shortdescrip"][$i], 0, 255);
           $full_text = $slot_text . " " . $description_text;
+
+          /* ========================================== INICIO MODIFICACION =================================== */
+          $html .= "<div style='background-color:{$colores[$description_text]}; display:block; width: 100%; box-sizing: border-box; font-size: 1.5em;'>\n";
+          //$html .= "<div class=\"" . $class . "\">\n";
+          /* ========================================== FIN MODIFICACION =================================== */
           switch ($monthly_view_entries_details)
           {
             case "description":
@@ -348,7 +363,8 @@ function month_table_innerhtml($day, $month, $year, $room, $area)
           }
           $html .= "<a href=\"$booking_link\" title=\"$full_text\">";
           $html .= ($d[$cday]['is_repeat'][$i]) ? "<img class=\"repeat_symbol\" src=\"images/repeat.png\" alt=\"" . get_vocab("series") . "\" title=\"" . get_vocab("series") . "\" width=\"10\" height=\"10\">" : '';
-          $html .= "$display_text</a>\n";
+          $html .= "{$mat[$description_text]}</a>\n";
+          //$html .= "$display_text</a>\n";
           $html .= "</div>\n";
         }
         $html .= "</div>\n";
@@ -522,7 +538,6 @@ echo $inner_html;
 echo "</table>\n";
 
 echo $before_after_links_html;
-show_colour_key();
 
 // Draw the three month calendars
 if ($display_calendar_bottom)
