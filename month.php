@@ -545,5 +545,15 @@ if ($display_calendar_bottom)
   minicals($year, $month, $day, $area, $room, 'month');
 }
 
+echo '<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51336609-5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag(\'js\', new Date());
+
+  gtag(\'config\', \'UA-51336609-5\');
+</script>';
+
 output_trailer();
 
