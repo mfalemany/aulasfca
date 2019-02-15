@@ -45,7 +45,7 @@ echo '
 <meta property="og:image" content="logo_fca.png"/>
 <meta property="og:url" content="http://aulas.agr.unne.edu.ar"/>
 <meta property="og:site_name" content="Reserva de Aulas - Bedelía FCA"/>
-<meta property="og:description" content="Sistema de administración de aulas de la Facultad de Ciencias Agrarias de la UNNE" />
+<meta property="og:description" content="Sistema de administraci&oacute;n de aulas de la Facultad de Ciencias Agrarias de la UNNE" />
 ';
 
   
