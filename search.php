@@ -120,6 +120,10 @@ function output_row($row,$params=array())
 
 // Get non-standard form variables
 $search_str = get_form_var('search_str', 'string');
+//NO SE ADMITEN BUSQUEDAS DE TEXTO (SÓLO LOS CÓDIGOS DEL SELECT)
+if(!is_numeric($search_str)){
+  die('Epa!');
+}
 $search_pos = get_form_var('search_pos', 'int');
 $total = get_form_var('total', 'int');
 $advanced = get_form_var('advanced', 'int');
@@ -145,7 +149,7 @@ if (isset($search_str) && ($search_str !== ''))
 }
 
 // Check the user is authorised for this page
-checkAuthorised();
+//checkAuthorised(); //NO SE NECESITAN PRIVILEGIOS PARA REALIZAR BUSQUEDAS
 
 // Also need to know whether they have admin rights
 $user = getUserName();
