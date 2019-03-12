@@ -227,9 +227,13 @@ $now = mktime(0, 0, 0, $month, $day, $year);
 
 $sql_params = array();
 /* ========================================================================================== */
-$sql_pred = "(( " . db()->syntax_caseless_contains("E.create_by", $search_str, $sql_params)
+$sql_pred = "(E.name = '".$search_str."'"; //ESTA LINEA FUE MODIFICADA. EL ORIGINAL, COMENTADO ABAJO
+
+/*$sql_pred = "(( " . db()->syntax_caseless_contains("E.create_by", $search_str, $sql_params)
   . ") OR (E.name = '".$search_str."'"
-  . ") OR (" . db()->syntax_caseless_contains("E.description", $search_str, $sql_params). ")";
+  . ") OR (" . db()->syntax_caseless_contains("E.description", $search_str, $sql_params). ")";*/
+
+
   /* ========================================================================================== */
 
 // Also need to search custom fields (but only those with character data,
@@ -284,7 +288,6 @@ if (!$is_admin)
                         (A.private_override='none') AND
                         (
                          (E.status&" . STATUS_PRIVATE . "=0) OR
-                         (E.create_by = ?) OR
                          (
                           (A.private_override='private') AND (E.create_by = ?)
                          )
@@ -315,6 +318,10 @@ if (!isset($total))
   $sql = "SELECT count(*)
           FROM $tbl_entry E, $tbl_room R, $tbl_area A
           WHERE $sql_pred";
+         
+          
+
+
   $total = db()->query1($sql, $sql_params);
 }
 
