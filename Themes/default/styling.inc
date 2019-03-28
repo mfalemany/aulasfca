@@ -11,7 +11,7 @@ $header_font_color              = "#ffffff";    // font color for text in header
 $highlight_font_color           = "#ff0066";    // used for highlighting text (eg links, errors)
 $colour_key_font_color          = $standard_font_color;    // used in the colour key table
 
-$banner_back_color              = "#4b667b";    // background colour for banner
+$banner_back_color              = "#365386";    // background colour for banner
 $banner_border_color            = $body_background_color;    // border colour for banner
 $banner_font_color              = $header_font_color;       // font colour for banner
 
