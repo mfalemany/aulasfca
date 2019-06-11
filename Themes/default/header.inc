@@ -44,7 +44,7 @@ echo '
 <meta property="og:type" content="website"/&gt;
 <meta property="og:image" content="logo_fca.png"/>
 <meta property="og:url" content="http://aulas.agr.unne.edu.ar"/>
-<meta property="og:site_name" content="Reserva de Aulas - BedelÌa FCA"/>
+<meta property="og:site_name" content="Reserva de Aulas - Bedel? FCA"/>
 <meta property="og:description" content="Sistema de administraci&oacute;n de aulas de la Facultad de Ciencias Agrarias de la UNNE" />
 ';
 
@@ -158,9 +158,9 @@ function print_rooms($query_string)
 {
   echo "<a href=\"admin.php?$query_string\">" . get_vocab("rooms") . "</a>\n";
 }
-function print_materias()
+function print_opciones()
 {
-  echo "<a href=\"materias.php\">Materias</a>\n";
+  echo "<a href=\"opciones.php\">Configuraci√≥n</a>\n";
 }
 
 
@@ -258,11 +258,17 @@ function print_nav($day, $month, $year, $area, $room, $search_str=null, $simple=
     print_goto_date($day, $month, $year, $area, $room);
     echo "</li>\n";
     
+    $user = getUserName();
+    $is_admin = (authGetUserLevel($user) >= 2);
+
+    if($is_admin){
+
     echo "<li>\n";
     print_rooms($query_string);
     echo "<hr>";
-    print_materias();
+    print_opciones();
     echo "</li>\n";
+    }
     
     echo "<li>\n";
     print_report($query_string);

@@ -1,7 +1,10 @@
 <?php 
 	
 	require_once __DIR__."/../lib/MRBS/DB.php";
-	require_once __DIR__."/../lib/MRBS/DB_pgsql.php";		
+	require_once __DIR__."/../lib/MRBS/DB_pgsql.php";	
+	if(!isset($_SESSION)){
+		session_start();
+	}	
 
 
 class Adaptador{
@@ -30,7 +33,18 @@ class Adaptador{
 		if(!is_numeric($id_materia)){
 			return array();
 		}
-		$sql = "SELECT * FROM materias WHERE id_materia = ".$this->quote($id_materia);
+		$sql = "SELECT
+					mat.id_materia,
+					mat.materia,
+					mat.es_materia,
+					mat.carrera,
+					mat.color,
+					array_to_string(array_agg(mc.codigo),',') as codigos
+				FROM materias AS mat
+				LEFT JOIN materias_codigos as mc ON mc.id_materia = mat.id_materia
+				WHERE mat.id_materia = ".$this->quote($id_materia)."
+				GROUP BY mat.id_materia, mat.materia, mat.es_materia, mat.carrera, mat.color";
+
 		$resultado = $this->db->query($sql);
 		return $resultado->all_rows_keyed()[0];
 	}
@@ -131,14 +145,15 @@ class Adaptador{
 
 	function editar_materia($detalles)
 	{
+		
 		//ELIMINO TODOS LOS CODIGOS DE ESA MATERIA (PARA VOLVER A GUARDAR LOS NUEVOS RECIBIDOS)
 		$sql = "DELETE FROM materias_codigos WHERE id_materia = ".$this->quote($detalles['id_materia']);
 		$this->db->command($sql);
 
+		//Si existen códigos, los convierto en un array
 		if(isset($detalles["codigos"]) && strlen(trim($detalles["codigos"])) > 0 ){
 			$codigos = explode(',',$detalles['codigos']);
 		}
-		
 		//elimino indices innecesarios
 		$id_materia = $detalles['id_materia'];
 		unset($detalles['codigos']);
@@ -154,8 +169,10 @@ class Adaptador{
 		$campos = implode(',',$campos);
 
 		$sql = "UPDATE materias SET $campos WHERE id_materia = ".$id_materia;
+		
 		//si se guarda la materia, guardo los códigos
-		if($this->db->command($sql)){
+		$resultado = $this->db->command($sql);
+		if($resultado){
 			if(isset($codigos)){
 				foreach ($codigos as $codigo) {
 					if(!$this->nuevo_codigo_materia($id_materia,$codigo)){
@@ -186,8 +203,7 @@ class Adaptador{
 	function nuevo_codigo_materia($id_materia,$codigo)
 	{
 		$codigo = substr($codigo,0,5);
-		$sql = "INSERT INTO materias_codigos VALUES ('$id_materia','$codigo')";
-		//echo $sql;
+		$sql = "INSERT INTO materias_codigos VALUES ($id_materia,'$codigo')";
 		return $this->db->command($sql);
 	}
 
@@ -257,6 +273,74 @@ class Adaptador{
 	    $select .= "</select>";
 	    return $select;
 	}
+
+	function cleanInput($input) {
+ 
+		$search = array(
+			'@<script[^>]*?>.*?</script>@si',   // Elimina javascript
+			'@<[\/\!]*?[^<>]*?>@si',            // Elimina las etiquetas HTML
+			'@<style[^>]*?>.*?</style>@siU',    // Elimina las etiquetas de estilo
+			'@<![\s\S]*?--[ \t\n\r]*>@'         // Elimina los comentarios multi-línea
+		);
+
+		$output = preg_replace($search, '', $input);
+			return $output;
+		}
+
+	function sanitize($input) {
+		if (is_array($input)) {
+			foreach($input as $var=>$val) {
+				$output[$var] = $this->sanitize($val);
+			}
+		}
+		else {
+			if (get_magic_quotes_gpc()) {
+				$input = stripslashes($input);
+			}
+			$output  = $this->cleanInput($input);
+			
+		}
+		return $output;
+	}
+
+	/** ==========================================================================================
+	 *  ============================ DÍAS NO LABORABLES ==========================================
+	 *========================================================================================== */
+	function borrar_no_laborable($id)
+	{
+		if(!is_numeric($id)){
+			return FALSE;
+		}
+		$sql = "DELETE FROM no_laborables WHERE id = $id";
+		return $this->db->command($sql);
+	}
+
+	function guardar_no_laborable($fecha)
+	{
+		$sql = "INSERT INTO no_laborables (fecha) VALUES ('".$this->sanitize($fecha)."')";
+		try {
+			return $this->db->command($sql);
+
+		} catch (MRBS\DBException $e) {
+			
+			$_SESSION['notificaciones'][] = 'No se pudo guardar el d&iacute;a no laborable. Posiblemente ya se encuentre registrado.';
+			return FALSE;
+		}
+		
+	}
+
+	function get_no_laborables()
+	{
+		$sql = "SELECT id, fecha FROM no_laborables ORDER BY fecha ASC";
+		$resultado = $this->db->query($sql);
+		$no_laborables = array();
+		$resultado = $resultado->all_rows_keyed();
+		foreach ($resultado as $no_laborable) {
+			$no_laborables[$no_laborable['id']] = $no_laborable['fecha'];
+		}
+		return $no_laborables;
+	}
+
 
 	
 	

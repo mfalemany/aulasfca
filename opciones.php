@@ -1,86 +1,12 @@
 <?php 
 	namespace MRBS;
-	require_once "defaultincludes.inc";
-	require_once "functions.inc";
-	use Adaptador;
+	include_once('opciones_procesar.php'); 
 
-	// Check the user is authorised for this page
-	checkAuthorised();
-	// Also need to know whether they have admin rights
-	$user = getUserName();
-	$required_level = (isset($max_level) ? $max_level : 2);
-	$is_admin = (authGetUserLevel($user) >= $required_level);
-
-	//obtengo una adaptador
-	$a = new Adaptador();
-
-	//Si tengo un ID de materia, es porque se est· guardando una nuevo, o editando una existente
-	if(isset($_POST['materia'])){
-		if($_POST['id_materia']){
-			if(editar_materia($_POST)){
-				$notificacion = "SE HA MODIFICADO LA MATERIA CON &Eacute;XITO";
-			}else{
-				$notificacion = "Ocurri&oacute; un error al intentar guardar. Es posible que los c&oacute;digos ingresados ya existan en otras materias";
-			}
-		}else{
-			$filtro = array('materia' => $_POST['materia'], 'carrera' => $_POST['carrera']);
-			if(!$a->existe_materia($filtro)){ 
-				if(!existen_codigos($_POST['codigos'])){
-					if(nueva_materia($_POST)){
-						$notificacion = "SE HA GUARDADO LA MATERIA CON &Eacute;XITO";
-					}else{
-						$notificacion = "OCURRI&Oacute; UN ERROR DESCONOCIDO AL INTENTAR GUARDAR LA MATERIA";					
-					}
-				}else{
-					$notificacion = "ALGUNO DE LOS C&Oacute;DIGOS INGRESADOS YA EST&Aacute; EN USO";
-				}
-			}else{
-				$notificacion = "YA EXISTE UNA MATERIA CON EL MISMO NOMBRE EN ESA CARRERA";
-			}
-		}
-	}
-
-	
-	//Extraigo las variables contenidas en $_POST
-	extract($_POST);
-	//Por defecto, la variable materia no contiene nada
-	$materia = array();
-	//Si se est· buscando una materia, realizo la busqueda
-	if(isset($materia_busqueda)){
-		$materia = $a->get_materias(array('id_materia'=>$materia_busqueda));
-		if($materia){
-			$materia = $materia[0];
-		}
-	}else{
-		$materia_busqueda = '-1';
-	}
-
-
-	function editar_materia($datos)
-	{
-		global $a;
-		return $a->editar_materia($datos);
-	}
-	function nueva_materia($datos)
-	{
-		global $a;
-		return $a->nueva_materia($datos);
-	}
-	function existen_codigos($codigos)
-	{
-		global $a;
-		$codigos = explode(',',$codigos);
-		foreach ($codigos as $codigo) {
-			if($a->existe_codigo($codigo)){
-				return TRUE;
-			}
-		}
-		return FALSE;
-	}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
 	<style type="text/css">
 		#contenedor_materias{
 			margin-top: 20px;
@@ -101,15 +27,28 @@
 			margin: 5px 0px 5px 0px;
 		}
 	</style>
-	<title>Modificacion de Materias</title>
+	<title>Configuraci√≥n</title>
 </head>
 <body>
 <?php print_header(); ?>
+<?php if(isset($_SESSION['notificaciones']) && count($_SESSION['notificaciones'])) : ?>
+<div id="notificacion" style="background-color:#feffa0; font-size: 1.2em; color:#c54242; padding: 5px 0px 5px 20px; font-weight: bold;">
+	<?php 
+		foreach ($_SESSION['notificaciones'] as $notificacion) {
+			echo $notificacion."<br>";
+		}
+		unset($_SESSION['notificaciones']);
+	?>	
+
+</div>
+<?php endif; ?>
+
 
 <div id='contenedor_materias'>
 	<fieldset>
 		<legend>Seleccione una materia para modificar</legend>
-		<form action="materias.php" method="post">
+		<form action="opciones.php" method="post">
+			<input type="hidden" name="action" value="buscar_materia">
 			<?php 
 			echo $a->generar_select('Seleccione una materia para editar','materia_busqueda',$materia_busqueda);
 			?>
@@ -117,14 +56,11 @@
 		</form>
 	</fieldset>
 	<fieldset>
-		<?php if(isset($notificacion)) : ?>
-		<div id="notificacion" style="background-color:#feffa0; font-size: 1.2em; color:#c54242; padding: 5px 0px 5px 20px; font-weight: bold;">
-			<?php echo $notificacion; ?>	
-		</div>
-		<?php endif; ?>
+		
 		<legend>Detalles de la materia</legend>
-		<form action="materias.php" method="post">
+		<form action="opciones.php" method="post">
 			<input type="hidden" name="id_materia" value="<?php echo (isset($materia['id_materia'])) ? $materia['id_materia'] : ''; ?>">
+			<input type="hidden" name="action" value="modificar_materia">
 			<table>
 				<tr>
 					<td>Materia:</td>
@@ -169,9 +105,42 @@
 
 		</form>
 	</fieldset>
+	<fieldset>
+		<legend>D&iacute;as no laborables</legend>
+		<form method="POST" action="opciones.php" >
+			<input type="hidden" name="action" value="no_laborables">
+			<input type="date" name="fecha" value="<?php echo date('Y-m-d'); ?>">
+			<input type="submit" value="Agregar">
+		</form>	
+			<ul>
+				<?php foreach($no_laborables as $id => $fecha) : ?>
+					<li>
+						<?php echo date('d/m/Y',strtotime($fecha)); ?> 
+						<a href="opciones.php?action=borrar_no_laborable&id=<?php echo $id; ?>" 
+							onclick="confirmar(event,'Borrar d√≠a seleccionado?')">[Borrar]
+						</a>
+					</li>
+				<?php endforeach; ?>
+				
+			</ul>
+			
+
+		
+	</fieldset>
 </div>
 </body>
 <script type="text/javascript">
 	setTimeout(function(){ if( $("#notificacion") != 'undefined'){$("#notificacion").fadeOut()} } , 3000);
+	
+	//recibe el evento ocurrido y un mensaje para mostrar al usuario. Si el usuario no confirma, el evento se anula.
+	function confirmar(evento,mensaje)
+	{
+		if(!confirm(mensaje)){
+			evento.preventDefault();
+		}
+	}
+
+	window.history.pushState({}, '', 'opciones.php');
+	
 </script>
 </html>
