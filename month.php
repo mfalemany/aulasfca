@@ -137,6 +137,12 @@ function month_table_innerhtml($day, $month, $year, $room, $area)
   global $is_private_field;
   global $user;
   global $debug_flag;
+
+  // ==========================================================================================
+  $a = new Adaptador();
+  //obtengo los dias no laborables
+  $no_labs = $a->get_no_laborables();
+// ==========================================================================================
   
   $html = '';
   
@@ -254,6 +260,10 @@ function month_table_innerhtml($day, $month, $year, $room, $area)
       $html .= "<td class=\"hidden_day\">\n";
       $html .= "<div class=\"cell_container\">\n";
       $html .= "<div class=\"cell_header\">\n";
+       
+
+     
+
       // first put in the day of the month
       $html .= "<span>$cday</span>\n";
       $html .= "</div>\n";
@@ -265,6 +275,7 @@ function month_table_innerhtml($day, $month, $year, $room, $area)
       $html .= "<td class=\"valid\">\n";
       $html .= "<div class=\"cell_container\">\n";
       
+
       $html .= "<div class=\"cell_header\">\n";
       // If it's a Monday (the start of the ISO week), show the week number
       if ($view_week_number && (($weekcol + $weekstarts)%7 == 1))
@@ -277,6 +288,10 @@ function month_table_innerhtml($day, $month, $year, $room, $area)
       $html .= "<a class=\"monthday\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">$cday</a>\n";
 
       $html .= "</div>\n";
+      
+      $fecha = date('Y-m-d',strtotime($year."-".$month."-".$cday));
+      if(!in_array($fecha,$no_labs)){
+      
       
       // then the link to make a new booking
       $query_string = "room=$room&amp;area=$area&amp;year=$year&amp;month=$month&amp;day=$cday";
@@ -299,78 +314,87 @@ function month_table_innerhtml($day, $month, $year, $room, $area)
       // then any bookings for the day
       if (isset($d[$cday]["id"][0]))
       {
-        $html .= "<div class=\"booking_list\">\n";
-        $n = count($d[$cday]["id"]);
-        /* ========================================== INICIO MODIFICACION =================================== */
-        $a = new Adaptador();
-        $mat = $a->get_nombres_materias();
-        $colores = $a->get_colores();
+       
+            $html .= "<div class=\"booking_list\">\n";
+            $n = count($d[$cday]["id"]);
+            /* ========================================== INICIO MODIFICACION =================================== */
+            $a = new Adaptador();
+            $mat = $a->get_nombres_materias();
+            $colores = $a->get_colores();
+            
+            
+           
+           
+               for ($i = 0; $i < $n; $i++)
+                {
+                  // give the enclosing div the appropriate width: full width if both,
+                  // otherwise half-width (but use 49.9% to avoid rounding problems in some browsers)
+                  $class = $d[$cday]["color"][$i]; 
+                  if ($d[$cday]["status"][$i] & STATUS_PRIVATE)
+                  {
+                    $class .= " private";
+                  }
+                  if ($approval_enabled && ($d[$cday]["status"][$i] & STATUS_AWAITING_APPROVAL))
+                  {
+                    $class .= " awaiting_approval";
+                  }
+                  if ($confirmation_enabled && ($d[$cday]["status"][$i] & STATUS_TENTATIVE))
+                  {
+                    $class .= " tentative";
+                  }
+                  $class .= " $monthly_view_entries_details";
+                  
+                  
+
+                  
+                  $booking_link = "view_entry.php?id=" . $d[$cday]["id"][$i] . "&amp;day=$cday&amp;month=$month&amp;year=$year";
+                  $slot_text = $d[$cday]["data"][$i];
+                  $description_text = utf8_substr($d[$cday]["shortdescrip"][$i], 0, 255);
+                  $full_text = $slot_text . " " . $description_text;
+
+                  /* ========================================== INICIO MODIFICACION =================================== */
+                 $html .= "<div style='background-color:{$colores[$description_text]}; display:block; width: 100%; box-sizing: border-box; font-size: 1.5em;'>\n";
+                  //$html .= "<div class=\"" . $class . "\">\n";
+                  /* ========================================== FIN MODIFICACION =================================== */
+                  switch ($monthly_view_entries_details)
+                  {
+                    case "description":
+                    {
+                      $display_text = $description_text;
+                      break;
+                    }
+                    case "slot":
+                    {
+                      $display_text = $slot_text;
+                      break;
+                    }
+                    case "both":
+                    {
+                      $display_text = $full_text;
+                      break;
+                    }
+                    default:
+                    {
+                      $html .= "error: unknown parameter";
+                    }
+                  }
+                  $html .= "<a href=\"$booking_link\" title=\"$full_text\">";
+                  $html .= ($d[$cday]['is_repeat'][$i]) ? "<img class=\"repeat_symbol\" src=\"images/repeat.png\" alt=\"" . get_vocab("series") . "\" title=\"" . get_vocab("series") . "\" width=\"10\" height=\"10\">" : '';
+                  $html .= "{$mat[$description_text]}</a>\n";
+                  //$html .= "$display_text</a>\n";
+                  $html .= "</div>\n";
+                }
+    
         /* ========================================== FIN MODIFICACION =================================== */
-        //var_dump($mat);
-        // Show the start/stop times, 1 or 2 per line, linked to view_entry.
-        for ($i = 0; $i < $n; $i++)
-        {
-          // give the enclosing div the appropriate width: full width if both,
-          // otherwise half-width (but use 49.9% to avoid rounding problems in some browsers)
-          $class = $d[$cday]["color"][$i]; 
-          if ($d[$cday]["status"][$i] & STATUS_PRIVATE)
-          {
-            $class .= " private";
-          }
-          if ($approval_enabled && ($d[$cday]["status"][$i] & STATUS_AWAITING_APPROVAL))
-          {
-            $class .= " awaiting_approval";
-          }
-          if ($confirmation_enabled && ($d[$cday]["status"][$i] & STATUS_TENTATIVE))
-          {
-            $class .= " tentative";
-          }
-          $class .= " $monthly_view_entries_details";
-          
-          
-
-          
-          $booking_link = "view_entry.php?id=" . $d[$cday]["id"][$i] . "&amp;day=$cday&amp;month=$month&amp;year=$year";
-          $slot_text = $d[$cday]["data"][$i];
-          $description_text = utf8_substr($d[$cday]["shortdescrip"][$i], 0, 255);
-          $full_text = $slot_text . " " . $description_text;
-
-          /* ========================================== INICIO MODIFICACION =================================== */
-          $html .= "<div style='background-color:{$colores[$description_text]}; display:block; width: 100%; box-sizing: border-box; font-size: 1.5em;'>\n";
-          //$html .= "<div class=\"" . $class . "\">\n";
-          /* ========================================== FIN MODIFICACION =================================== */
-          switch ($monthly_view_entries_details)
-          {
-            case "description":
-            {
-              $display_text = $description_text;
-              break;
-            }
-            case "slot":
-            {
-              $display_text = $slot_text;
-              break;
-            }
-            case "both":
-            {
-              $display_text = $full_text;
-              break;
-            }
-            default:
-            {
-              $html .= "error: unknown parameter";
-            }
-          }
-          $html .= "<a href=\"$booking_link\" title=\"$full_text\">";
-          $html .= ($d[$cday]['is_repeat'][$i]) ? "<img class=\"repeat_symbol\" src=\"images/repeat.png\" alt=\"" . get_vocab("series") . "\" title=\"" . get_vocab("series") . "\" width=\"10\" height=\"10\">" : '';
-          $html .= "{$mat[$description_text]}</a>\n";
-          //$html .= "$display_text</a>\n";
-          $html .= "</div>\n";
-        }
+        
         $html .= "</div>\n";
       }
       
       $html .= "</div>\n";
+    }else{
+      $html .= "<div style='text-align:center; color:red;'><b>NO LABORABLE</b></div>";
+    }
+
       $html .= "</td>\n";
     }
     
