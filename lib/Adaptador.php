@@ -329,9 +329,10 @@ class Adaptador{
 		
 	}
 
-	function get_no_laborables()
+	function get_no_laborables($anio = NULL)
 	{
-		$sql = "SELECT id, fecha FROM no_laborables ORDER BY fecha ASC";
+		$anio = ($anio) ? $anio : date('Y');
+		$sql = "SELECT id, fecha FROM no_laborables WHERE EXTRACT(year FROM fecha) = $anio ORDER BY fecha ASC";
 		$resultado = $this->db->query($sql);
 		$no_laborables = array();
 		$resultado = $resultado->all_rows_keyed();
