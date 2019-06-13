@@ -60,7 +60,7 @@
 		<legend>Detalles de la materia</legend>
 		<form action="opciones.php" method="post">
 			<input type="hidden" name="id_materia" value="<?php echo (isset($materia['id_materia'])) ? $materia['id_materia'] : ''; ?>">
-			<input type="hidden" name="action" value="modificar_materia">
+			<input type="hidden" name="action" value=<?php echo (isset($materia)) ? "modificar_materia" : "nueva_materia" ; ?>>
 			<table>
 				<tr>
 					<td>Materia:</td>

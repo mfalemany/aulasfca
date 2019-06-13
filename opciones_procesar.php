@@ -32,17 +32,19 @@
 				} 
 				break;
 			case 'modificar_materia':
-				$materia = array(
-					'id_materia' => $_POST['id_materia'],
-					'materia'    => $_POST['materia'],
-					'es_materia' => isset($_POST['es_materia']) ? $_POST['es_materia'] : 'N',
-					'color'      => $_POST['color'],
-					'carrera'    => $_POST['carrera'],
-					'codigos'    => $_POST['codigos']
-				);
-				$_SESSION['notificaciones'][] = $a->editar_materia($materia) ? 'Materia modificada con éxito!' : 'Ocurrió un error al intentar modificar la materia';
+				unset($_POST['action']);
+				$_POST['es_materia'] = isset($_POST['es_materia']) ? $_POST['es_materia'] : 'N';
+
+				$_SESSION['notificaciones'][] = $a->editar_materia($_POST) ? 'Materia modificada con éxito!' : 'Ocurrió un error al intentar modificar la materia';
 				unset($materia);
 				break;
+			case 'nueva_materia':
+				unset($_POST['action']);
+				$_POST['es_materia'] = isset($_POST['es_materia']) ? $_POST['es_materia'] : 'N';
+				
+				$_SESSION['notificaciones'][] = $a->nueva_materia($_POST) ? "Materia guardada!" : "Ocurrió un error al intentar guardar la materia";
+				break;
+
 		}
 		
 	}
