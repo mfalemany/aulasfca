@@ -18,6 +18,7 @@ foreach ($colores as $id_materia => $color) {
 }
 echo "</style>";
 
+
 /* ==================== GENERO ESTILOS PARA DISTINTOS COLORES POR MATERIA  ===========================*/
 
   echo "<meta charset=\"" . get_charset() . "\">\n";

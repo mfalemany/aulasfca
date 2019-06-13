@@ -1,5 +1,6 @@
 <?php
 namespace MRBS;
+use Adaptador;
 
 require "defaultincludes.inc";
 require_once "mincals.inc";
@@ -73,10 +74,24 @@ $ty = date("Y",$i);
 $tm = date("m",$i);
 $td = date("d",$i);
 
-
+// ==========================================================================================
+$a = new Adaptador();
+//obtengo los dias no laborables
+$no_labs = $a->get_no_laborables();
+// ==========================================================================================
 
 // Show current date and timezone
 echo "<div id=\"dwm\">\n";
+
+
+// ==========================================================================================
+if(in_array(date('Y-m-d',$timestamp),$no_labs)){
+  echo "<h2 class='mensaje error'>DIA NO LABORABLE</h2>"; 
+  $inner_html = ""; //Para que no se muestre el calendario
+}
+// ==========================================================================================
+
+
 echo "<h2>" . utf8_strftime($strftime_format['date'], $timestamp) . "</h2>\n";
 if ($display_timezone)
 {
@@ -98,7 +113,7 @@ $before_after_links_html = "
   <a class=\"date_after\" href=\"$href_after\">" . get_vocab("dayafter") . "</a>
 </nav>\n";
     
-echo "<div class=\"screenonly\" style='text-align:center;'><span class='modif_tamano' onclick='agrandar()'>Grande</span><span class='modif_tamano' onclick='achicar()'>Normal</span><span class='modif_tamano' style='background-color:#ce4949; color:#FFF;' onclick='achicar(); window.print();'>Imprimir</span></div>";
+
 // and output them
 echo $before_after_links_html;
 
@@ -106,7 +121,10 @@ echo "<table class=\"dwm_main\" id=\"day_main\" data-resolution=\"$resolution\">
 echo $inner_html;
 echo "</table>\n";
   
-echo $before_after_links_html;
+if(strlen($inner_html)){
+  echo $before_after_links_html;  
+}
+
 
 //show_colour_key();
 // Draw the three month calendars
