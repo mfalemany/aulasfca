@@ -176,3 +176,9 @@ $max_slots = 60;
 
 //Logo de la Facultad
 $mrbs_company_logo = "logo_fca.png";
+
+//Dias que se ocultan del calendario por ser no laborables
+$hidden_days = array(0);
+//Determina que el formato en el que se muestran los edificios será un select (el otro valor posible es 'list')
+$area_list_format = "select";
+
