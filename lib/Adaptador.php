@@ -238,6 +238,12 @@ class Adaptador{
 	/** ==========================================================================================
 	 *  ============================ AUXILIARES ==================================================
 	 *========================================================================================== */
+	function get_fecha_reserva($id_reserva)
+	{
+		$sql = "SELECT * FROM mrbs_entry WHERE id = ".sanitize($id_reserva);
+		$resultado = $this->db->query($sql)->all_rows_keyed();
+		return $resultado;
+	}
 
 	function eliminar_acentos($string)
 	{
