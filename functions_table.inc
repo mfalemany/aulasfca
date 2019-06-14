@@ -2,6 +2,9 @@
 namespace MRBS;
 use Adaptador;
 
+$a = new Adaptador();
+$no_labs = $a->get_no_laborables();
+
 // width of the row label columns in the day and week views
 $first_last_width = 1;  // (%)
 $column_hidden_width  = 0;  // (%) width of the column for hidden days (set to 0 for no column at all; 1 for a narrow column);
@@ -264,6 +267,27 @@ function map_add_booking ($entry, &$column, $start_first_slot, $start_last_slot)
 
 function cell_html($cell, $query_strings, $is_invalid = FALSE)
 {
+  
+ 
+ 
+
+
+
+  /* ================================================================================= */
+  global $a;
+  global $no_labs;
+
+  $dia = explode('=',substr($query_strings['new_times'],strpos($query_strings['new_times'],'day='),6))[1];
+  $mes = explode('=',substr($query_strings['new_times'],strpos($query_strings['new_times'],'month='),8))[1];
+  $anio = explode('=',substr($query_strings['new_times'],strpos($query_strings['new_times'],'year='),9))[1];
+  $fecha = "$anio-$mes-$dia";
+  
+
+
+  
+  /* ================================================================================= */
+
+
   // draws a single cell in the main table of the day and week views
   //
   // $cell is a two dimensional array that is part of the map of the whole
@@ -311,6 +335,7 @@ function cell_html($cell, $query_strings, $is_invalid = FALSE)
   // if the time slot has got multiple bookings, then draw a mini-table
   if(isset($cell[1]["id"]))
   {
+
     // Find out how many bookings there are (needed to calculate heights)
     $n_bookings = 0;
     while (isset($cell[$n_bookings]["id"]))
@@ -328,6 +353,8 @@ function cell_html($cell, $query_strings, $is_invalid = FALSE)
     $html .= "<div class=\"multiple_control\">+</div>\n";
     $html .= "<table>\n";
     $html .= "<tbody>\n";
+
+
     
     $row_height = $main_cell_height - (($n_bookings-1) * $main_table_cell_border_width);   // subtract the borders (first row has no top border)
     $row_height = $row_height/$n_bookings;  // split what's left between the bookings
@@ -450,8 +477,13 @@ function cell_html($cell, $query_strings, $is_invalid = FALSE)
   // otherwise draw a cell, showing either the booking or a blank cell
   else
   {  
+    if(in_array($fecha, $no_labs)){
+      $html .= "<td style='background-color:#BBB'></td>";
+      return $html;
+    }
     if(isset($cell[0]["id"]))
     {  
+       
 
       $id         = $cell[0]["id"];
       $is_repeat  = $cell[0]["is_repeat"];
@@ -517,56 +549,67 @@ function cell_html($cell, $query_strings, $is_invalid = FALSE)
     // <td> for the first slot would have had a rowspan that extended the cell down for
     // the number of slots of the booking.
 
+   
+   
+    //"<div class=\"celldiv slots1\">DIA NO LABORABLE</div>";
+
+
     if (!isset($id) || isset($descr))
     {
-      $html .= tdcell($c, $slots);
 
-      // If the room isn't booked then allow it to be booked
-      if (!isset($id))
-      {
-        // Don't provide a link if the slot doesn't really exist
-        if (!$is_invalid)
-        {
-          $html .= "<div class=\"celldiv slots1\">\n";  // a bookable slot is only one unit high
-          $html .= "<a href=\"edit_entry.php?" . 
-                   (($enable_periods) ? $query_strings['new_periods'] : $query_strings['new_times']) . 
-                   "\">\n";
-          if ($show_plus_link)
+         $html .= tdcell($c, $slots);
+       
+
+      
+          // If the room isn't booked then allow it to be booked
+          if (!isset($id))
           {
-            $html .= "<img src=\"images/new.gif\" alt=\"New\" width=\"10\" height=\"10\">\n";
+            // Don't provide a link if the slot doesn't really exist
+            if (!$is_invalid)
+            {
+              $html .= "<div class=\"celldiv slots1\">\n";  // a bookable slot is only one unit high
+              $html .= "<a href=\"edit_entry.php?" . 
+                       (($enable_periods) ? $query_strings['new_periods'] : $query_strings['new_times']) . 
+                       "\">\n";
+              if ($show_plus_link)
+              {
+                $html .= "<img src=\"images/new.gif\" alt=\"New\" width=\"10\" height=\"10\">\n";
+              }
+              $html .= "</a>\n";
+              $html .= "</div>\n";
+            }
           }
-          $html .= "</a>\n";
-          $html .= "</div>\n";
-        }
-      }
-      else                 // if it is booked then show the booking
-      {
-        /* ========================================================== */
-        $adaptador = new Adaptador();
-        //$materia = $adaptador->get_materia($descr);
-        //var_dump($materia);
-        $materia = $adaptador->get_materia($descr);
-        
-        
-        //$color = $adaptador->get_nombre_materia();
-        /* ========================================================== */
-        $html .= "<div data-id=\"$id\" data-type=\"$color\" class=\"celldiv clase_id_".$materia['id_materia']." slots" .
-       
+          else                 // if it is booked then show the booking
+          {
+           
+    // =============================================================================================
+           $materia = $a->get_materia($descr);
+    // =============================================================================================
+            
+             
 
-                 (($times_along_top) ? "1" : $slots) .
-                 "\">\n";
 
-         
+                //$color = $adaptador->get_nombre_materia();
+                /* ========================================================== */
+                $html .= "<div data-id=\"$id\" data-type=\"$color\" class=\"celldiv clase_id_".$materia['id_materia']." slots" .
+               
 
-        $html .= "<a href=\"view_entry.php?id=$id&amp;". $query_strings['booking'] . "\" title=\"$long_descr\">";
-        $html .= ($is_repeat) ? "<img class=\"repeat_symbol $c\" src=\"images/repeat.png\" alt=\"" . get_vocab("series") . "\" title=\"" . get_vocab("series") . "\" width=\"10\" height=\"10\">" : '';
-       
-        $nombre_reserva = $materia['materia'];
-        $html .= "$nombre_reserva</a>\n";
-        //$html .= "$descr</a>\n";
-        
-        $html .= "</div>\n";
-      }
+                         (($times_along_top) ? "1" : $slots) .
+                         "\">\n";
+
+                 
+
+                $html .= "<a href=\"view_entry.php?id=$id&amp;". $query_strings['booking'] . "\" title=\"$long_descr\">";
+                $html .= ($is_repeat) ? "<img class=\"repeat_symbol $c\" src=\"images/repeat.png\" alt=\"" . get_vocab("series") . "\" title=\"" . get_vocab("series") . "\" width=\"10\" height=\"10\">" : '';
+               
+                $nombre_reserva = $materia['materia'];
+                $html .= "$nombre_reserva</a>\n";
+                //$html .= "$descr</a>\n";
+                
+                $html .= "</div>\n";
+              
+          }
+      
       $html .= "</td>\n";
     }
   }
