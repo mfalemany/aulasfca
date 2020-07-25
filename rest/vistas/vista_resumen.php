@@ -122,7 +122,7 @@
 		});
 
 		async function cargarClases(){
-			const clases = await fetch('http://localhost/aulas/resumen/get_datos.php');
+			const clases = await fetch('http://aulas.agr.unne.edu.ar/rest/cronograma_diario');
 			return await clases.json();
 		}
 		async function cargarFiltro(){
