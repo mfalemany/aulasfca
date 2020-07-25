@@ -44,7 +44,7 @@ $dbsys = "pgsql";
 // to use Unix Domain Sockets instead of TCP/IP. For mysql "localhost"
 // tells the system to use Unix Domain Sockets, and $db_port will be ignored;
 // if you want to force TCP connection you can use "127.0.0.1".
-$db_host = "172.17.0.4";
+$db_host = "172.17.0.7";
 // If you need to use a non standard port for the database connection you
 // can uncomment the following line and specify the port number
 // $db_port = 1234;
@@ -182,3 +182,5 @@ $hidden_days = array(0);
 //Determina que el formato en el que se muestran los edificios será un select (el otro valor posible es 'list')
 $area_list_format = "select";
 
+//CSS Personalizado
+$custom_css_url = "css/propio.css";
