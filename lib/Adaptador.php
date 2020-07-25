@@ -348,6 +348,54 @@ class Adaptador{
 		return $no_laborables;
 	}
 
+	/** ==========================================================================================
+	 *  ============================ RESUMEN DE CLASES ===========================================
+	 *========================================================================================== */
+
+	/*
+	Esta funcion retorna las reservas de un dia determinado (pasado como parámetro). El parámetro $incluir_eventos_pasados considera la hora actual, y muestra todas las reservas del día, o solo las posteriores a la hora actual (las que vienen). Se hace la resta de una hora para que se muestren las reservas que iniciaron HASTA una hora atras (para que no desaparezcan en el momento de iniciar)
+	 */
+	function get_cronograma_diario($fecha,$incluir_eventos_pasados = TRUE){
+		if($fecha){
+			$partes = explode('-',str_replace(array('.','-','/',),'-',$fecha));
+			if(count($partes) == 3){
+				if(    strlen($partes[0]) == 4  &&  is_numeric($partes[0])  
+					&& strlen($partes[1]) == 2  &&  is_numeric($partes[1])
+					&& strlen($partes[2]) == 2  &&  is_numeric($partes[2])){
+					//Es una fecha válida?  (checkdate(month,day,year))
+					if(checkdate($partes[1],$partes[2],$partes[0])){
+						$fecha = implode('-',$partes);
+					}else{
+						$fecha = date('Y-m-d');		
+					}
+				}else{
+					$fecha = date('Y-m-d');
+				}
+			}else{
+				$fecha = date('Y-m-d');
+			}
+		}
+		
+		$sql = "select 
+					to_timestamp(e.start_time)::date as fecha,
+					to_timestamp(e.start_time)::time as hora_inicio,
+					to_timestamp(e.end_time)::time as hora_fin,
+					a.area_name as lugar,
+					r.room_name as aula,
+					m.materia,
+					e.description as descripcion
+				from mrbs_entry as e
+				left join mrbs_room as r on r.id = e.room_id
+				left join materias as m on m.id_materia = e.name::integer
+				left join mrbs_area as a on a.id = r.area_id
+				where to_timestamp(e.start_time)::date = '$fecha' ";
+		if( ! $incluir_eventos_pasados){
+			$sql .= " and to_timestamp(e.start_time) > current_timestamp + '-1 hr' "; 
+		}
+		$sql .= " order by to_timestamp(e.start_time)::time asc";
+		return $this->db->query($sql)->all_rows_keyed();
+		
+	}
 
 	
 	
