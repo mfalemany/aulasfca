@@ -9,11 +9,13 @@ class Rest{
 
 	function cronograma_diario($fecha = NULL){
 		$fecha = ($fecha) ? $fecha : date('Y-m-d');
-		$resumen = $this->conexion->get_cronograma_diario($fecha,TRUE);
+		$resumen = $this->conexion->get_cronograma_diario($fecha);
 		echo json_encode(array('fecha' => $fecha, 'clases' => $resumen));		
 	}
+	
+	
 
-	private function dump($variable){
+	public function dump($variable){
 		if(is_array($variable)){
 			echo "<table style='border-collapse: collapse; border: 1px solid black;'>\n";
 			foreach($variable as $clave => $valor){
