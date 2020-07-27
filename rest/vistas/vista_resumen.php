@@ -138,7 +138,8 @@
 			//Objeto fecha que me servirá para extraer partes independientes de la hora
 			ahora = new Date(`${hoy} ${hora_actual}`);
 
-			const res = await fetch(`http://192.168.0.52/aulas/rest/cronograma_diario/${hoy}`);
+			const res = await fetch(`http://aulas.agr.unne.edu.ar/rest/cronograma_diario/${hoy}`);
+			//const res = await fetch(`http://192.168.0.52/aulas/rest/cronograma_diario/${hoy}`);
 			datos = await res.json();
 			
 			$mostrar_pasadas = d.getElementById('mostrar_pasadas');
