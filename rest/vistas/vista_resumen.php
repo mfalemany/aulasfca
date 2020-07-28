@@ -108,7 +108,7 @@
 			<h1></h1>
 		</div>
 		<div id="opciones">
-			<div class="checkbox">
+			<div class="checkbox filtro">
 				<input type="checkbox" id="mostrar_pasadas">
 				<label>Mostrar pasadas</label>	
 			</div>
@@ -122,17 +122,17 @@
 	<template id="template_clase">
 		<div class="clase">
 			<div class="hora-aula">
-				<span class="hora">08:00 a 14:00</span> - 
-				<span class="aula">Aula de Microscopía D1</span>
+				<span class="hora"></span> - 
+				<span class="aula"></span>
 			</div>
-			<div class="titulo">Producción y riego en el cultivo de arroz en los plantas</div>
+			<div class="titulo"></div>
 			<div class="detalles">
-				<div class="descripcion">Exámen parcial. Prof. Acosta. Grupos 1 y 2 de Matemática</div>
+				<div class="descripcion"></div>
 			</div>
 		</div>	
 	</template>
 	<template id="template_opcion">
-		<div class="checkbox">
+		<div class="checkbox filtro">
 			<input type="checkbox">
 			<label></label>	
 		</div>
@@ -142,41 +142,63 @@
 		d = document;
 		var clases, hoy, hora_actual, ahora, $mostrar_pasadas, url_base;
 		
-		
 		hoy = new Date().toLocaleDateString("es-AR",{year:'numeric',month:'2-digit',day:'2-digit'}).split('/').reverse().join('-');
 		hora_actual = new Date().toLocaleTimeString("es-AR",{hour:'2-digit', minute:'2-digit', second:'2-digit'});
 		//Objeto fecha que me servirá para extraer partes independientes de la hora
 		ahora = new Date(`${hoy} ${hora_actual}`);
 
 		d.addEventListener('DOMContentLoaded', async () => {
-			const config = await fetch('../config_rest.json').then( r => r.json() ).then( json => json);
-			const res = await fetch(`${config.url_base}/cronograma_diario/${hoy}`);
-			//const res = await fetch(`http://192.168.0.52/aulas/rest/cronograma_diario/${hoy}`);
-			datos = await res.json();
+			//Obtengo las clases de hoy
+			datos = await obtenerClases(hoy);
+			
+			//Filtro para mostrar u ocultar las clases que ya pasaron
 			$mostrar_pasadas = d.getElementById('mostrar_pasadas');
-			$mostrar_pasadas.addEventListener('change', () => cargarClases() );
-			cargarClases(hoy);
+			
+			//Cargar filtro y clases
 			cargarFiltro(datos.clases);
+			
+			//Se agregan los listeners a los filtros
+			$mostrar_pasadas.addEventListener('change', () => cargarClases(datos));	
+			d.querySelectorAll('.filtro input[type=checkbox]').forEach( filtro => {
+				filtro.addEventListener('change', () => cargarClases(datos))
+			});
+			
+			cargarClases(datos);
 		});
 
-
-		async function cargarClases(fecha = null){
+		async function obtenerClases(fecha = null){
 			fecha = (fecha) ? fecha : hoy;
+			const config = await fetch('../config_rest.json').then( r => r.json() ).then( json => json);
+			const res = await fetch(`${config.url_base}/cronograma_diario/${hoy}`);
+			return res.json();
+		}
+
+
+		function cargarClases(datos){
+			
 			d.querySelector('#cabecera h1').innerText = ahora.toLocaleDateString('es-AR',{weekday:'long',day:'2-digit',month:'long'});
 			let fragmento = d.createDocumentFragment();
 
 			const unaHoraMenos = new Date();
 			unaHoraMenos.setHours(unaHoraMenos.getHours() - 1);
+			
 			datos.clases.forEach( clase => {
-				//Se muestran o no las clases ya pasadas
 				if( ! $mostrar_pasadas.checked){
-					const inicioClase = new Date(`${fecha} ${clase.hora_inicio}`);
+					const inicioClase = new Date(`${datos.fecha} ${clase.hora_inicio}`);
 					if(inicioClase.getTime() < unaHoraMenos.getTime() ){
 						return;
 					}	
 				}
+
+				//verifico si el filtro de lugar, correspondiente al lugar de esta clase, está activo o no
+				if( ! d.querySelector(`.filtro[data-lugar='${clase.lugar}'] input[type=checkbox]`).checked){
+					return;
+				}
+				
 				let template = d.getElementById('template_clase').content;
 				template.querySelector('.clase').dataset.lugar = clase.lugar;
+				template.querySelector('.clase').dataset.hora = clase.hora_inicio;
+				template.querySelector('.clase').dataset.fecha = datos.fecha;
 				let horario = `${clase.hora_inicio.substring(0,5)} a ${clase.hora_fin.substring(0,5)}`;
 				template.querySelector('.hora').innerText = horario;
 				template.querySelector('.aula').innerText = clase.aula;
@@ -190,10 +212,22 @@
 			return clases;
 		}
 
-		async function cargarFiltro(datos){
-			var lugares = [];
+		function mostrarPasadas(){
+			
+			d.querySelectorAll('.clase').forEach( clase => {
+				//Se muestran o no las clases ya pasadas
+				if( ! $mostrar_pasadas.checked){
+					const inicioClase = new Date(`${clase.dataset.fecha} ${clase.dataset.hora}`);
+					if(inicioClase.getTime() < unaHoraMenos.getTime() ){
+						clase.classList.add('hidden_display');
+					}	
+				}
+			});
+		}
+
+		async function cargarFiltro(clases){
 			//Obtengo todos los lugares, sin duplicados
-			lugares = new Set(datos.map( clase => clase.lugar));
+			lugares = new Set(clases.map( clase => clase.lugar));
 
 			let template = d.getElementById('template_opcion').content;
 			let fragmento = d.createDocumentFragment();
@@ -201,12 +235,8 @@
 			lugares.forEach( lugar => {
 				template.querySelector('label').innerText = lugar;
 				template.querySelector('input[type=checkbox]').checked = true;
+				template.querySelector('.filtro').dataset.lugar = lugar;
 				let clone = document.importNode(template, true);
-				clone.querySelector('input[type=checkbox]').addEventListener('click', (target) => {
-					d.querySelectorAll(`.clase[data-lugar='${lugar}']`).forEach( elem => {
-						elem.classList.toggle('hidden_display');
-					})
-				})
 				fragmento.appendChild(clone);
 			})
 			d.getElementById('opciones').appendChild(fragmento);
