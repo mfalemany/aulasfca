@@ -68,7 +68,7 @@
 		}
 		.checkbox label{
 			align-self: center;
-			font-size: 2.5em;
+			font-size: 1.3em;
 		}
 		.clase{
 			border: 1px solid #22F;
@@ -91,6 +91,12 @@
 		.clase .detalles .descripcion{
 			color:#444;
 			font-size: 30px;
+		}
+		.hidden_display{
+			display: none;
+		}
+		.hidden_visibility{
+			visibility: hidden;
 		}
 		
 
@@ -125,26 +131,32 @@
 			</div>
 		</div>	
 	</template>
+	<template id="template_opcion">
+		<div class="checkbox">
+			<input type="checkbox">
+			<label></label>	
+		</div>
+	</template>
 
 	<script type="text/javascript">
 		d = document;
-		var clases, hoy, hora_actual, ahora, $mostrar_pasadas;
+		var clases, hoy, hora_actual, ahora, $mostrar_pasadas, url_base;
+		
+		
+		hoy = new Date().toLocaleDateString("es-AR",{year:'numeric',month:'2-digit',day:'2-digit'}).split('/').reverse().join('-');
+		hora_actual = new Date().toLocaleTimeString("es-AR",{hour:'2-digit', minute:'2-digit', second:'2-digit'});
+		//Objeto fecha que me servirá para extraer partes independientes de la hora
+		ahora = new Date(`${hoy} ${hora_actual}`);
 
 		d.addEventListener('DOMContentLoaded', async () => {
-			hoy = new Date().toLocaleDateString("es-AR",{year:'numeric',month:'2-digit',day:'2-digit'}).split('/').reverse().join('-');
-
-			hora_actual = new Date().toLocaleTimeString("es-AR",{hour:'2-digit', minute:'2-digit', second:'2-digit'});
-			
-			//Objeto fecha que me servirá para extraer partes independientes de la hora
-			ahora = new Date(`${hoy} ${hora_actual}`);
-
-			const res = await fetch(`http://aulas.agr.unne.edu.ar/rest/cronograma_diario/${hoy}`);
+			const config = await fetch('../config_rest.json').then( r => r.json() ).then( json => json);
+			const res = await fetch(`${config.url_base}/cronograma_diario/${hoy}`);
 			//const res = await fetch(`http://192.168.0.52/aulas/rest/cronograma_diario/${hoy}`);
 			datos = await res.json();
-			
 			$mostrar_pasadas = d.getElementById('mostrar_pasadas');
 			$mostrar_pasadas.addEventListener('change', () => cargarClases() );
 			cargarClases(hoy);
+			cargarFiltro(datos.clases);
 		});
 
 
@@ -163,7 +175,8 @@
 						return;
 					}	
 				}
-				template = d.getElementById('template_clase').content;
+				let template = d.getElementById('template_clase').content;
+				template.querySelector('.clase').dataset.lugar = clase.lugar;
 				let horario = `${clase.hora_inicio.substring(0,5)} a ${clase.hora_fin.substring(0,5)}`;
 				template.querySelector('.hora').innerText = horario;
 				template.querySelector('.aula').innerText = clase.aula;
@@ -177,8 +190,26 @@
 			return clases;
 		}
 
-		async function cargarFiltro(){
+		async function cargarFiltro(datos){
+			var lugares = [];
+			//Obtengo todos los lugares, sin duplicados
+			lugares = new Set(datos.map( clase => clase.lugar));
 
+			let template = d.getElementById('template_opcion').content;
+			let fragmento = d.createDocumentFragment();
+
+			lugares.forEach( lugar => {
+				template.querySelector('label').innerText = lugar;
+				template.querySelector('input[type=checkbox]').checked = true;
+				let clone = document.importNode(template, true);
+				clone.querySelector('input[type=checkbox]').addEventListener('click', (target) => {
+					d.querySelectorAll(`.clase[data-lugar='${lugar}']`).forEach( elem => {
+						elem.classList.toggle('hidden_display');
+					})
+				})
+				fragmento.appendChild(clone);
+			})
+			d.getElementById('opciones').appendChild(fragmento);
 		}
 
 	</script>
