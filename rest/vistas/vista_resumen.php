@@ -156,7 +156,7 @@
 			
 			//Cargar filtro y clases
 			cargarFiltro(datos.clases);
-			
+
 			//Se agregan los listeners a los filtros
 			$mostrar_pasadas.addEventListener('change', () => cargarClases(datos));	
 			d.querySelectorAll('.filtro input[type=checkbox]').forEach( filtro => {
@@ -210,19 +210,6 @@
 			d.getElementById('contenedor_clases').innerHTML = '';
 			d.getElementById('contenedor_clases').appendChild(fragmento);
 			return clases;
-		}
-
-		function mostrarPasadas(){
-			
-			d.querySelectorAll('.clase').forEach( clase => {
-				//Se muestran o no las clases ya pasadas
-				if( ! $mostrar_pasadas.checked){
-					const inicioClase = new Date(`${clase.dataset.fecha} ${clase.dataset.hora}`);
-					if(inicioClase.getTime() < unaHoraMenos.getTime() ){
-						clase.classList.add('hidden_display');
-					}	
-				}
-			});
 		}
 
 		async function cargarFiltro(clases){
