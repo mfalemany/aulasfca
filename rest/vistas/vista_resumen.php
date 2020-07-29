@@ -33,18 +33,7 @@
 			width: 100vw;
 
 		}
-		#cabecera #reload{
-		    border-radius: 50%;
-		    display: inline-block;
-		    font-size: 70px;
-		    height: 60px;
-			line-height: 0px;
-		    padding: 0px;	
-			position: absolute;
-		    right: 40px;
-		    top: 8px;
-		    width: 60px;
-		}
+
 		#cabecera h1:first-letter{
 			align-self: center;
 			
@@ -119,7 +108,6 @@
 <body>
 	<div class="contenedor">
 		<div id="cabecera">
-			<button id="reload">&#x21bb;</button>
 			<h1></h1>
 		</div>
 		<div id="opciones">
