@@ -33,6 +33,18 @@
 			width: 100vw;
 
 		}
+		#cabecera #reload{
+		    border-radius: 50%;
+		    display: inline-block;
+		    font-size: 70px;
+		    height: 60px;
+			line-height: 0px;
+		    padding: 0px;	
+			position: absolute;
+		    right: 40px;
+		    top: 8px;
+		    width: 60px;
+		}
 		#cabecera h1:first-letter{
 			align-self: center;
 			
@@ -44,31 +56,33 @@
 			align-items: center;
 			border: 1px solid #AAA;
 			display:flex;
-			flex-flow: row nowrap;
-			justify-content: space-evenly;
-			margin: 0px 0px 20px 0px;
+			flex-flow: row wrap;
+			justify-content: center;
+			margin: 0px 0px 10px 0px;
 			padding: 10px 0px;
 			width: 100vw;
 		}
 		.checkbox{
 			display: flex;
 			flex-flow: row nowrap;
+			margin-bottom: 20px;
+			width:45%;
 		}
 		.checkbox input[type='checkbox']{
 			align-self: center;	
 		    box-shadow: 0px 0px 5px black;
 		    border-radius:5px;
 		    border:10px solid #111;
-		    height:40px;
+		    height:70px;
 		    margin-right: 10px;
-		    width: 40px;
+		    width: 70px;
 		}
 		.checkbox input[type='checkbox']:checked {
 		    background-color: #68a3ce;
 		}
 		.checkbox label{
 			align-self: center;
-			font-size: 1.3em;
+			font-size: 2rem;
 		}
 		.clase{
 			border: 1px solid #22F;
@@ -105,6 +119,7 @@
 <body>
 	<div class="contenedor">
 		<div id="cabecera">
+			<button id="reload">&#x21bb;</button>
 			<h1></h1>
 		</div>
 		<div id="opciones">
@@ -162,9 +177,16 @@
 			d.querySelectorAll('.filtro input[type=checkbox]').forEach( filtro => {
 				filtro.addEventListener('change', () => cargarClases(datos))
 			});
-			
+			programarReload();
 			cargarClases(datos);
 		});
+
+		function programarReload(){
+			setInterval( async () => {
+				datos = await obtenerClases();
+				cargarClases(datos);
+			}, (1000*60*5));
+		}
 
 		async function obtenerClases(fecha = null){
 			fecha = (fecha) ? fecha : hoy;
