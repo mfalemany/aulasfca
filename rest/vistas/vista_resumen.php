@@ -189,13 +189,12 @@
 			d.querySelector('#cabecera h1').innerText = ahora.toLocaleDateString('es-AR',{weekday:'long',day:'2-digit',month:'long'});
 			let fragmento = d.createDocumentFragment();
 
-			const unaHoraMenos = new Date();
-			unaHoraMenos.setHours(unaHoraMenos.getHours() - 1);
+			const horaActual = new Date();
 			
 			datos.clases.forEach( clase => {
 				if( ! $mostrar_pasadas.checked){
 					const inicioClase = new Date(`${datos.fecha} ${clase.hora_inicio}`);
-					if(inicioClase.getTime() < unaHoraMenos.getTime() ){
+					if(inicioClase.getTime() < horaActual.getTime() ){
 						return;
 					}	
 				}
