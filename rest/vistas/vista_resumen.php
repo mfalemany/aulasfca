@@ -44,11 +44,11 @@
 		#opciones{
 			align-items: center;
 			border: 1px solid #AAA;
-			display:flex;
+			display: flex;
 			flex-flow: row wrap;
-			justify-content: center;
+			justify-content: left;
 			margin: 0px 0px 10px 0px;
-			padding: 10px 0px;
+			padding: 10px 0px 10px 50px;
 			width: 100vw;
 		}
 		.checkbox{
