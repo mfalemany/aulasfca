@@ -7,7 +7,7 @@ class Rest{
 		$this->conexion = new Adaptador();
 	}
 
-	function cronograma_diario($fecha = NULL){
+	function clases($fecha = NULL){
 		$fecha = ($fecha) ? $fecha : date('Y-m-d');
 		$resumen = $this->conexion->get_cronograma_diario($fecha);
 		echo json_encode(array('fecha' => $fecha, 'clases' => $resumen));		

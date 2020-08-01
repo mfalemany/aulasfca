@@ -178,8 +178,7 @@
 
 		async function obtenerClases(fecha = null){
 			fecha = (fecha) ? fecha : hoy;
-			const config = await fetch('../config_rest.json').then( r => r.json() ).then( json => json);
-			const res = await fetch(`${config.url_base}/cronograma_diario/${hoy}`);
+			const res = await fetch(`${window.location.pathname}/../../rest/clases/${hoy}`);
 			return res.json();
 		}
 
