@@ -10,6 +10,7 @@ class Rest{
 	function clases($fecha = NULL){
 		$fecha = ($fecha) ? $fecha : date('Y-m-d');
 		$resumen = $this->conexion->get_cronograma_diario($fecha);
+		header('Content-type: application/json; charset=UTF-8');
 		echo json_encode(array('fecha' => $fecha, 'clases' => $resumen));		
 	}
 	
