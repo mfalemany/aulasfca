@@ -28,11 +28,8 @@ class Adaptador{
 	 *  ============================ MATERIAS ====================================================
 	 *========================================================================================== */
 
-	function get_materia($id_materia)
+	function get_materia($id_materia = NULL)
 	{
-		if(!is_numeric($id_materia)){
-			return array();
-		}
 		$sql = "SELECT
 					mat.id_materia,
 					mat.materia,
@@ -41,12 +38,16 @@ class Adaptador{
 					mat.color,
 					array_to_string(array_agg(mc.codigo),',') as codigos
 				FROM materias AS mat
-				LEFT JOIN materias_codigos as mc ON mc.id_materia = mat.id_materia
-				WHERE mat.id_materia = ".$this->quote($id_materia)."
-				GROUP BY mat.id_materia, mat.materia, mat.es_materia, mat.carrera, mat.color";
+				LEFT JOIN materias_codigos as mc ON mc.id_materia = mat.id_materia";
+				if($id_materia){
+					$sql .= " WHERE mat.id_materia = ".$this->quote($id_materia);
+				}	
+				$sql .= " GROUP BY mat.id_materia, mat.materia, mat.es_materia, mat.carrera, mat.color
+				ORDER BY materia";
 
 		$resultado = $this->db->query($sql);
-		return $resultado->all_rows_keyed()[0];
+		$resultado =  $resultado->all_rows_keyed();
+		return ($id_materia && isset($resultado[0])) ? $resultado[0] : $resultado;
 	}
 
 	function get_nombre_materia($id_materia)

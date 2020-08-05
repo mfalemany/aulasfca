@@ -13,6 +13,12 @@ class Rest{
 		header('Content-type: application/json; charset=UTF-8');
 		echo json_encode(array('fecha' => $fecha, 'clases' => $resumen));		
 	}
+
+	function materias($id_materia){
+		$materia = $this->conexion->get_materia($id_materia);
+		header('Content-type: application/json; charset=UTF-8');
+		echo json_encode($materia);	
+	}
 	
 	
 

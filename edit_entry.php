@@ -1483,6 +1483,87 @@ echo "</fieldset>\n";
     ?>
   </fieldset>
 </form>
+<template id="opcion_extra">
+  <div>
+    <input type="checkbox" style="width:15px; display:inline-block">
+    <label class="opcion_desc"></label>
+  </div>
+</template>
+<script type="text/javascript">
+  const d = document;
+  document.addEventListener('DOMContentLoaded', () => {
+
+
+    
+    //Textarea que contiene la descripci? de la reserva
+    $divDescripcion = d.querySelector('#div_description');
+    //Obtengo el contenido del template de "opci? extra"
+    $template = d.querySelector('#opcion_extra').content;
+    $template.querySelector('input[type=\'checkbox\']').setAttribute('id','chk_publicar');
+    $template.querySelector('.opcion_desc').textContent = "Publicar en Anuncios";
+    //clono el template y lo agrego al div de descripci?
+    let clone = d.importNode($template,true);
+    $divDescripcion.appendChild(clone);
+
+    //Agrego el eventListener al boton guardar
+    $boton_guardar = d.querySelector('input[name=\'save_button\']');
+    $boton_guardar.addEventListener('click',publicar);
+  });
+
+  async function publicar(){
+    if( ! document.getElementById('chk_publicar').checked){
+      return;
+    }
+    //Obtengo la descripci? de la reserva
+    descripcion = d.querySelector('#description').value;
+    if( ! descripcion){
+      return;
+    }
+    
+    //Obtengo lo necesario del select de materias
+    $selectMateria = d.querySelector('select[name=\'name\']');
+    seleccionada = d.querySelector('select[name=\'name\']').selectedIndex;
+    nombreMateria = $selectMateria[seleccionada].text;
+    codigoMateria = $selectMateria[seleccionada].value;
+    
+    //Obtengo la URL de la API REST de aulas
+    config = await fetch('rest/rest_config.json').then(r=>r.json()).then(j=>j);
+    //Consulto los detalles de la materia seleccionada
+    materia = await fetch(`${config.url_rest_aulas}/materias/${codigoMateria}`).then(r=>r.json()).then(j=>j);
+    if(materia){
+      //Defino la cabecera para autenticaci?
+      const header = new Headers({
+        'Authorization': 'Basic aulario:Aulas2131',
+        'Content-Type' : 'application/json',
+        'charset'      : 'UTF-8'
+      });
+      
+      let carrera = (materia.carrera.indexOf('AGR') >= 0) ? 'agronomia' :
+        (materia.carrera.indexOf('IND') >= 0) ? 'industrial' : 'todas';
+
+
+      fecha = document.getElementById('start_datepicker').value;
+      segundos = document.getElementById('start_seconds').value;
+      hora = Math.ceil(segundos/60/60);
+      hora = hora.toString().padStart(2,'0');
+      minutos = Math.abs((hora - (segundos/60/60)) * 60);
+      minutos = minutos.toString().padEnd(2,'0');
+
+        
+      edificio = document.getElementById('area')[document.getElementById('area').selectedIndex].text;
+      aula = document.getElementById('rooms')[document.getElementById('rooms').selectedIndex].text;
+
+      contenido = `<b>${descripcion}</b>
+      <b>Día</b>: ${fecha}. <b>Hora</b>: ${hora}:${minutos}.
+      <b>Lugar</b>: ${edificio} - ${aula}`;
+      let body = JSON.stringify({'titulo': nombreMateria.toUpperCase(), 'cuerpo': contenido, 'carrera': carrera});
+      //ejecuto la publicacion
+      res = fetch(`${config.url_rest_anuncios}/publicar`,{method: 'post',header,body});
+      
+    } 
+  }
+
+</script>
 
 <?php 
 output_trailer();
