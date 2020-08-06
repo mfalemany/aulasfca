@@ -215,6 +215,19 @@ class Adaptador{
 	}
 
 	/** ==========================================================================================
+	 *  ============================ ESPACIOS ====================================================
+	 *========================================================================================== */
+	function get_info_aula($id_aula){
+		$sql = "select r.room_name as aula, a.area_name as edificio 
+				from mrbs_room as r,mrbs_area as a
+				where r.area_id = a.id
+				and r.id = ".$this->quote($id_aula);
+		$resultado = $this->db->query($sql)->all_rows_keyed();
+		return (isset($resultado[0])) ? $resultado[0] : FALSE;
+	}
+
+
+	/** ==========================================================================================
 	 *  ============================ COLORES ====================================================
 	 *========================================================================================== */
 	function get_color_materia($id_materia)
@@ -251,9 +264,12 @@ class Adaptador{
 		return str_replace(array('á','é','í','ó','ú','Á','É','Í','Ó','Ú'),array('a','e','i','o','u','A','E','I','O','U'),$string);
 	}
 
-	function quote($elemento)
+	function quote($texto)
 	{
-		return "'".$elemento."'";
+		$texto_limpio = '';
+		$invalidos = array('/truncate/i','/update/i','/insert/i','/delete/i','/sleep/i','/drop/i','/--/','/\//');
+		$texto_limpio = preg_replace($invalidos,'',$texto);
+		return "'".addslashes($texto_limpio)."'";
 	}
 
 	function generar_select($etiqueta, $name, $seleccionado='', $solo_materias=false)
@@ -395,6 +411,29 @@ class Adaptador{
 		
 	}
 
+
+	function publicar_anuncio($titulo,$cuerpo,$carrera){
+		$raw_content = json_encode(array('titulo'=>$titulo,'cuerpo'=>$cuerpo,'carrera'=>$carrera,'usuario'=>9));
+		//Obtengo la configuracion
+		$config = file_get_contents(dirname(__FILE__)."/../rest/rest_config.json");
+		$config = json_decode($config,TRUE);
+
+		$ch = curl_init();
+		//Opciones de Curl
+		curl_setopt_array($ch, 
+			[CURLOPT_HTTPAUTH      => CURLAUTH_BASIC,
+			CURLOPT_USERPWD        => $config["usuario_anuncios"].':'.$config["clave_anuncios"],
+			CURLOPT_URL            => $config["url_rest_anuncios"],
+			CURLOPT_PROXY          => '',
+			CURLOPT_POST           => TRUE,
+			CURLOPT_HTTPHEADER     => array('Content-Type:application/json'),
+			CURLOPT_POSTFIELDS     => $raw_content,
+			CURLOPT_RETURNTRANSFER => true
+		]);
+		
+		$res = curl_exec($ch);
+		curl_close($ch);
+	}
 	
 	
 }

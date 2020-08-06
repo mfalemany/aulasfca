@@ -59,7 +59,7 @@ $fields = db()->field_info($tbl_entry);
 $custom_fields = array();
 
 // Fill $edit_entry_field_order with not yet specified entries.
-$entry_fields = array('name', 'description', 'start_date', 'end_date', 'areas',
+$entry_fields = array('name', 'description', 'publicar_anuncios','start_date', 'end_date', 'areas',
                       'rooms', 'type', 'confirmation_status', 'privacy_status');
                       
 foreach ($entry_fields as $field)
@@ -1181,7 +1181,18 @@ foreach ($edit_entry_field_order as $key)
     break;
 
   case 'description':
-    create_field_entry_description();
+    create_field_entry_description(); 
+    break;
+  /* ================== AGREGADO: OPCIÓN PUBLICAR EN ANUNCIOS ================== */
+  case 'publicar_anuncios':
+    /* ================== AGREGADO: OPCIÓN PUBLICAR EN ANUNCIOS ================== */
+     echo "<div id='div_publicar_anuncios'>\n";
+      $params = array('label' => 'Publicar en Anuncios',
+                      'name' => 'publicar_anuncios',
+                      'value' => '');
+      generate_checkbox($params);
+      echo "</div>\n";
+      /* ========================================================================= */
     break;
 
   case 'start_date':
@@ -1489,7 +1500,7 @@ echo "</fieldset>\n";
     <label class="opcion_desc"></label>
   </div>
 </template>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   const d = document;
   document.addEventListener('DOMContentLoaded', () => {
 
@@ -1563,7 +1574,7 @@ echo "</fieldset>\n";
     } 
   }
 
-</script>
+</script> -->
 
 <?php 
 output_trailer();

@@ -1,5 +1,6 @@
 <?php
 namespace MRBS;
+use Adaptador;
 
 require "defaultincludes.inc";
 require_once "mrbs_sql.inc";
@@ -62,6 +63,7 @@ $is_admin = (authGetUserLevel($user) >= 2);
 $formvars = array('create_by'          => 'string',
                   'name'               => 'string',
                   'description'        => 'string',
+                  'publicar_anuncios'  => 'string',
                   'start_seconds'      => 'int',
                   'start_day'          => 'int',
                   'start_month'        => 'int',
@@ -651,7 +653,6 @@ if (isset($rep_type) && ($rep_type != REP_NONE) &&
 
 // (4) Assemble the booking data
 // -----------------------------
-
 // Assemble an array of bookings, one for each room
 $bookings = array();
 foreach ($rooms as $room_id)
@@ -782,6 +783,23 @@ if ($ajax && function_exists('json_encode'))
 // Everything was OK.   Go back to where we came from
 if ($result['valid_booking'])
 {
+  
+  /* ============================= LLAMADA A API PAAR PUBLICACION DEL ANUNCIO ================*/
+  if($publicar_anuncios){
+    $a = new Adaptador();
+    $carreras = array('AGR'=>'agronomia','IND'=>'industrial');
+    $materia = $a->get_materia($booking['name']);
+    $carrera = ( isset( $carreras[$materia['carrera']] ) ) ? $carreras[$materia['carrera']] : 'todas';
+    $fecha = date('d-m-Y',$booking['start_time']);
+    $hora = date('H:i',$booking['start_time']);
+    $espacio = $a->get_info_aula($booking['room_id']);
+    
+    $cuerpo = "<b>{$booking['description']}</b><br>
+      <b>Lugar</b>: {$espacio['edificio']} - {$espacio['aula']}.
+      <b>Fecha</b>: $fecha a las $hora hs.";
+    $a->publicar_anuncio($materia['materia'],$cuerpo,$carrera);  
+  }
+  /* ============================= LLAMADA A API PAAR PUBLICACION DEL ANUNCIO ================*/
   header("Location: $returl");
   exit;
 }
@@ -878,4 +896,6 @@ if (empty($result['violations']['errors'])  &&
 echo "</div>\n";
 
 output_trailer();
+
+
 
