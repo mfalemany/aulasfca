@@ -59,8 +59,9 @@ $fields = db()->field_info($tbl_entry);
 $custom_fields = array();
 
 // Fill $edit_entry_field_order with not yet specified entries.
-$entry_fields = array('name', 'description', 'publicar_anuncios','start_date', 'end_date', 'areas',
-                      'rooms', 'type', 'confirmation_status', 'privacy_status');
+$entry_fields = array('name', 'description', 'publicar_anuncios','start_date', 'end_date', 'areas','rooms', 'privacy_status');
+//Se eliminó type y confirmation_status del array
+
                       
 foreach ($entry_fields as $field)
 {

@@ -417,13 +417,13 @@ class Adaptador{
 		//Obtengo la configuracion
 		$config = file_get_contents(dirname(__FILE__)."/../rest/rest_config.json");
 		$config = json_decode($config,TRUE);
-
+		$url = $config['url_rest_anuncios'].'/publicar';
 		$ch = curl_init();
 		//Opciones de Curl
 		curl_setopt_array($ch, 
 			[CURLOPT_HTTPAUTH      => CURLAUTH_BASIC,
 			CURLOPT_USERPWD        => $config["usuario_anuncios"].':'.$config["clave_anuncios"],
-			CURLOPT_URL            => $config["url_rest_anuncios"],
+			CURLOPT_URL            => $url,
 			CURLOPT_PROXY          => '',
 			CURLOPT_POST           => TRUE,
 			CURLOPT_HTTPHEADER     => array('Content-Type:application/json'),
