@@ -790,7 +790,7 @@ if ($result['valid_booking'])
     $carreras = array('AGR'=>'agronomia','IND'=>'industrial');
     $materia = $a->get_materia($booking['name']);
     $carrera = ( isset( $carreras[$materia['carrera']] ) ) ? $carreras[$materia['carrera']] : 'todas';
-    $fecha = date('d-m-Y',$booking['start_time']);
+    $fecha = strftime('%A %d de %B de %Y',$booking['start_time']);
     $hora = date('H:i',$booking['start_time']);
     $espacio = $a->get_info_aula($booking['room_id']);
     
