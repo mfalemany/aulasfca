@@ -793,8 +793,9 @@ if ($result['valid_booking'])
     $fecha = strftime('%A %d de %B de %Y',$booking['start_time']);
     $hora = date('H:i',$booking['start_time']);
     $espacio = $a->get_info_aula($booking['room_id']);
-    
-    $cuerpo = "<b>{$booking['description']}</b><br>
+    //Se quita la leyenda: usuario: correo@dominio
+    $texto = preg_replace('/usuario[ :]*[a-zA-Z0-9_\-\.]*@[a-zA-Z0-9_\-\.]*/mi',chr(8),$booking['description']);
+    $cuerpo = "<b>$texto</b>
       <b>Lugar</b>: {$espacio['edificio']} - {$espacio['aula']}.
       <b>Fecha</b>: $fecha a las $hora hs.";
     $a->publicar_anuncio($materia['materia'],$cuerpo,$carrera);  
