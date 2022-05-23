@@ -44,7 +44,7 @@ $dbsys = "pgsql";
 // to use Unix Domain Sockets instead of TCP/IP. For mysql "localhost"
 // tells the system to use Unix Domain Sockets, and $db_port will be ignored;
 // if you want to force TCP connection you can use "127.0.0.1".
-$db_host = "172.17.0.7";
+$db_host = "host.db.com";
 // If you need to use a non standard port for the database connection you
 // can uncomment the following line and specify the port number
 // $db_port = 1234;
@@ -55,9 +55,9 @@ $db_database = "aulas";
 // multiple schemas.
 $db_schema = "public";
 // Database login user name:
-$db_login = "postgres";
+$db_login = "user_postgres";
 // Database login password:
-$db_password = 'ContrapgCabral';
+$db_password = 'password_postgres';
 // Prefix for table names.  This will allow multiple installations where only
 // one database is available
 $db_tbl_prefix = "mrbs_";
@@ -73,8 +73,8 @@ $db_persist = TRUE;
 /*********************************
  * Site identification information
  *********************************/
-$mrbs_admin = "Federico Alemany";
-$mrbs_admin_email = "mfalemany@gmail.com";
+$mrbs_admin = "Pepe Argento";
+$mrbs_admin_email = "argento@pepe.com";
 // NOTE:  there are more email addresses in $mail_settings below.    You can also give
 // email addresses in the format 'Full Name <address>', for example:
 // $mrbs_admin_email = 'Booking System <admin_email@your.org>';
@@ -85,7 +85,7 @@ $mrbs_admin_email = "mfalemany@gmail.com";
 // The company name is mandatory.   It is used in the header and also for email notifications.
 // The company logo, additional information and URL are all optional.
 
-$mrbs_company = "Facultad de Ciencias Agrarias - UNNE";   // This line must always be uncommented ($mrbs_company is used in various places)
+$mrbs_company = "My Company Name";   // This line must always be uncommented ($mrbs_company is used in various places)
 
 // Uncomment this next line to use a logo instead of text for your organisation in the header
 //$mrbs_company_logo = "your_logo.gif";    // name of your logo file.   This example assumes it is in the MRBS directory
@@ -175,7 +175,7 @@ $eveningends_minutes   = 0;   // must be integer in range 0-59
 $max_slots = 60;
 
 //Logo de la Facultad
-$mrbs_company_logo = "logo_fca.png";
+$mrbs_company_logo = "logo.png";
 
 //Dias que se ocultan del calendario por ser no laborables
 $hidden_days = array(0);
