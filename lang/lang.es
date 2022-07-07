@@ -9,7 +9,7 @@
 // This file is PHP code. Treat it as such.
 
 // Used in style.inc
-$vocab["mrbs"]               = "Reserva de Aulas - Bedelía";
+$vocab["mrbs"]               = "Reserva de Aulas";
 
 // Used in functions.inc
 $vocab["report"]             = "Informes";
@@ -25,7 +25,7 @@ $vocab["areas"]              = "Edificios";
 $vocab["daybefore"]          = "Día Anterior";
 $vocab["dayafter"]           = "Día Siguiente";
 $vocab["gototoday"]          = "Día Actual";
-$vocab["goto"]               = "Ir a";
+$vocab["goto"]               = "Ver día";
 $vocab["highlight_line"]     = "Remarcar esta Línea";
 $vocab["click_to_reserve"]   = "Selecciona una Casilla para hacer una Reserva.";
 $vocab["timezone"]           = "Zona horaria";

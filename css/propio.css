@@ -6,3 +6,25 @@
 	color:#FFF;
 	text-shadow:1px 1px 1px #222;
 }
+.logo{
+	max-width: 60px;
+}
+.logo img{
+	max-height: 55px;
+	max-width : 55px;
+}
+.company{
+	display: flex;
+
+}
+.mrbs{
+	display: flex;
+	justify-content: center;
+}
+.mrbs a{
+	align-self: center;
+}
+input[type='button'], input[type='submit'], button{
+	padding: 5px 10px;
+	border-radius: 5px;
+}

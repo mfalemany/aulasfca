@@ -41,12 +41,12 @@ echo "</style>";
 
   /* =========================== META TAGS PARA VISTA PREVIA============================*/
 echo '
-<meta property="og:title" content="Reserva de Aulas FCA"/>
+<meta property="og:title" content="Reserva de Aulas FCV-UNNE"/>
 <meta property="og:type" content="website"/&gt;
-<meta property="og:image" content="logo_fca.png"/>
-<meta property="og:url" content="http://aulas.agr.unne.edu.ar"/>
-<meta property="og:site_name" content="Reserva de Aulas - Bedel? FCA"/>
-<meta property="og:description" content="Sistema de administraci&oacute;n de aulas de la Facultad de Ciencias Agrarias de la UNNE" />
+<meta property="og:image" content="logo.png"/>
+<meta property="og:url" content="http://aulas.vet.unne.edu.ar"/>
+<meta property="og:site_name" content="Reserva de Aulas"/>
+<meta property="og:description" content="Sistema de administraci&oacute;n de aulas de la Facultad de Ciencias Veterinarias de la UNNE" />
 ';
 
   

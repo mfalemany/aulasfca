@@ -59,7 +59,7 @@ $fields = db()->field_info($tbl_entry);
 $custom_fields = array();
 
 // Fill $edit_entry_field_order with not yet specified entries.
-$entry_fields = array('name', 'description', 'publicar_anuncios','start_date', 'end_date', 'areas','rooms', 'privacy_status');
+$entry_fields = array('name', 'description','start_date', 'end_date', 'areas','rooms', 'privacy_status');
 //Se eliminó type y confirmation_status del array
 
                       
@@ -1184,18 +1184,6 @@ foreach ($edit_entry_field_order as $key)
   case 'description':
     create_field_entry_description(); 
     break;
-  /* ================== AGREGADO: OPCIÓN PUBLICAR EN ANUNCIOS ================== */
-  case 'publicar_anuncios':
-    /* ================== AGREGADO: OPCIÓN PUBLICAR EN ANUNCIOS ================== */
-     echo "<div id='div_publicar_anuncios'>\n";
-      $params = array('label' => 'Publicar en Anuncios',
-                      'name' => 'publicar_anuncios',
-                      'value' => '');
-      generate_checkbox($params);
-      echo "</div>\n";
-      /* ========================================================================= */
-    break;
-
   case 'start_date':
     create_field_entry_start_date();
     break;

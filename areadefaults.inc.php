@@ -30,7 +30,7 @@ namespace MRBS;
 
 // $enable_periods is settable on a per-area basis.
 
-$enable_periods = TRUE;  // Default value for new areas
+$enable_periods = FALSE;  // Default value for new areas
 
  
 // TIMES SETTINGS

@@ -79,7 +79,7 @@
 					<td><input type="color" name="color" 
 								value="<?php echo isset($materia['color']) ? $materia['color'] : ''; ?>" required></td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<td>Carrera:</td>
 					<td>
 						<select name="carrera" style="width:475px;" required>
@@ -89,15 +89,15 @@
 						</select>
 
 					</td>
-				</tr>
-				<tr>
+				</tr> -->
+				<!-- <tr>
 					<td>C&oacute;digos:</td>
 					<td>
 						<input type="text" name="codigos"  size="35" 
 								value="<?php echo (isset($materia['codigos'])) ? $materia['codigos'] : ''; ?>" >
 								 <span style='font-size:0.7em;'> (Ingrese valores separados por coma: Ejemplo: 01,50,51.)</span>
 					</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<td colspan=2 class="derecha"><input type="submit" value="Guardar"></td>
 				</tr>

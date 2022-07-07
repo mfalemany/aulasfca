@@ -38,7 +38,7 @@ http_headers(array("Content-type: text/css"),
 }
 
 body {
-  font-size: small;
+  font-size: 0.9rem;
   margin: 0;
   padding: 0;
   color:            <?php echo $standard_font_color ?>;
