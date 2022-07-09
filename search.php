@@ -199,14 +199,14 @@ if (!$ajax)
       </fieldset>
     </form>
     <?php
-    output_trailer();
+    ////output_trailer();
     exit;
   }
 
   if (!isset($search_str) || ($search_str === ''))
   {
     echo "<p class=\"error\">" . get_vocab("invalid_search") . "</p>";
-    output_trailer();
+    ////output_trailer();
     exit;
   }
 
@@ -328,7 +328,7 @@ if (!isset($total))
 if (($total <= 0) && !$ajax)
 {
   echo "<p id=\"nothing_found\">" . get_vocab("nothing_found") . "</p>\n";
-  output_trailer();
+  //output_trailer();
   exit;
 }
 
@@ -420,7 +420,7 @@ else
   echo "</tbody>\n";
   echo "</table>\n";
   echo "</div>\n";
-  output_trailer();
+  //output_trailer();
 }
 
  

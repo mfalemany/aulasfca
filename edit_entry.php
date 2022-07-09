@@ -1566,5 +1566,5 @@ echo "</fieldset>\n";
 </script> -->
 
 <?php 
-output_trailer();
+//output_trailer();
 

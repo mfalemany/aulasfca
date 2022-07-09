@@ -624,5 +624,5 @@ if (isset($HTTP_REFERER)) //remove the link if displayed from an email
 }
 
 
-output_trailer();
+//output_trailer();
 

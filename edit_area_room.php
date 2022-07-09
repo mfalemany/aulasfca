@@ -1523,5 +1523,5 @@ if (isset($change_area) &&!empty($area))
   <?php
 }
 
-output_trailer();
+//output_trailer();
 

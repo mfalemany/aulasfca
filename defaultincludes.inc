@@ -15,6 +15,7 @@ if (!function_exists('version_compare') || version_compare(PHP_VERSION, $min_PHP
 // is called.
 
 require_once 'lib/autoload.inc';
+require_once 'lib/PHPMailer/PHPMailerAutoload.php';
 require_once 'grab_globals.inc.php';   // this must be included before mrbs_auth.inc (due to WordPress - see comment in file)
 require_once 'systemdefaults.inc.php';
 require_once 'areadefaults.inc.php';
@@ -28,4 +29,5 @@ require_once 'dbsys.inc';
 require_once 'init.inc';
 require_once 'mrbs_auth.inc';
 require_once 'upgrade.inc';
+require_once 'trailer.inc';
 require 'standard_vars.inc.php';

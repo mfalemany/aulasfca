@@ -896,7 +896,7 @@ if (empty($result['violations']['errors'])  &&
 
 echo "</div>\n";
 
-output_trailer();
+//output_trailer();
 
 
 
