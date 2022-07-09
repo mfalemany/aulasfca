@@ -379,6 +379,7 @@ $aixlocale_codepage_map = array
   'En_US' => 'IBM-850',
   'en_US' => 'ISO8859-1',
   'Es_ES' => 'IBM-850',
+  'es_AR' => 'ISO8859-1',
   'es_ES' => 'ISO8859-1',
   'Fi_FI' => 'IBM-850',
   'fi_FI' => 'ISO8859-1',
@@ -635,7 +636,7 @@ if ($need_to_send_mail)
 
 // Define the default locale here. For a list of supported
 // locales on your system do "locale -a"
-setlocale(LC_ALL,'C');
+setlocale(LC_ALL,'es_AR.utf8');
 
 // We attempt to make up a sensible locale from the HTTP_ACCEPT_LANGUAGE
 // environment variable.
@@ -811,7 +812,7 @@ function get_os_locale($lang)
         break;
     }
   }
-  return $locale;
+  return 'es_AR.utf8';//$locale;
 }
 
 // Works out what locale should be used by MRBS depending on the config settings

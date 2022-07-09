@@ -1059,7 +1059,7 @@ $mail_settings['icalendar'] = false; // Set to true to include iCalendar details
 // -----------------------------------------
 
 // Set the language used for emails (choose an available lang.* file).
-$mail_settings['admin_lang'] = 'en';   // Default is 'en'.
+$mail_settings['admin_lang'] = 'es';   // Default is 'en'.
 
 
 // HOW TO EMAIL - ADDRESSES
@@ -1162,7 +1162,7 @@ $disable_automatic_language_changing = 0;
 // e.g. use "fr" to use the translations in "lang.fr" as the default
 // translations.  [NOTE: it is only necessary to change this if you
 // have disabled automatic language changing above]
-$default_language_tokens = "en";
+$default_language_tokens = "es";
 
 // Set this to a valid locale (for the OS you run the MRBS server on)
 // if you want to override the automatic locale determination MRBS
@@ -1177,7 +1177,7 @@ $override_locale = "";
 $faqfilelang = ""; 
 
 // Language selection when run from the command line
-$cli_language = "en";
+$cli_language = "es";
 
 // Vocab overrides
 // ---------------
