@@ -1699,6 +1699,6 @@ if ($cli_mode)
 
 if ($output_form)
 {
-  output_trailer();
+  //output_trailer();
 }
 

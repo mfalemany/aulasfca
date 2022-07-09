@@ -1027,7 +1027,7 @@ $mail_settings['book_admin_on_approval'] = false;  // the booking administrator 
 // and before, where there was no explicit config setting, but mails were always sent
 // for new bookings if there was somebody to send them to)
 
-$mail_settings['on_new']    = true;   // when an entry is created
+$mail_settings['on_new']    = false;   // when an entry is created
 $mail_settings['on_change'] = false;  // when an entry is changed
 $mail_settings['on_delete'] = false;  // when an entry is deleted
 

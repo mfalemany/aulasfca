@@ -494,7 +494,7 @@ echo "</div>\n";
 if ($room_invalid)
 {
   echo "<h1>".get_vocab("no_rooms_for_area")."</h1>";
-  output_trailer();
+  //output_trailer();
   exit;
 }
 
@@ -579,5 +579,5 @@ echo '<!-- Global site tag (gtag.js) - Google Analytics -->
   gtag(\'config\', \'UA-51336609-5\');
 </script>';
 
-output_trailer();
+//output_trailer();
 

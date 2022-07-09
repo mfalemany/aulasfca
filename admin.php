@@ -528,5 +528,5 @@ if ($is_admin || !empty($enabled_areas))
   echo "</div>\n";
 }
 
-output_trailer();
+//output_trailer();
 

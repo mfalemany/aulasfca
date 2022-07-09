@@ -143,5 +143,5 @@ echo '<!-- Global site tag (gtag.js) - Google Analytics -->
   gtag(\'config\', \'UA-51336609-5\');
 </script>';
 
-output_trailer();
+//output_trailer();
 

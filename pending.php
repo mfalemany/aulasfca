@@ -328,5 +328,5 @@ else  // display them in a table
   echo "</div>\n";
 }
 
-output_trailer();
+//output_trailer();
 

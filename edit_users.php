@@ -544,7 +544,7 @@ if (isset($Action) && ( ($Action == "Edit") or ($Action == "Add") ))
 <?php
 
   // Print footer and exit
-  output_trailer();
+  //output_trailer();
   exit;
 }
 
@@ -598,6 +598,7 @@ if (isset($Action) && ($Action == "Update"))
       // not rely on PHP sessions).
       switch ($fieldname)
       {
+
         // some of the fields get special treatment
         case 'name':
           // name: convert it to lower case
@@ -612,7 +613,7 @@ if (isset($Action) && ($Action == "Update"))
           // for security reasons.
           if ($password0 !== '')
           {
-            if (\PasswordCompat\binary\check())
+            if (function_exists('password_hash'))
             {
               $hash = password_hash($password0, PASSWORD_DEFAULT);
             }
@@ -951,6 +952,6 @@ if ($ajax)
 }
 else
 {
-  output_trailer();
+  //output_trailer();
 }
 
