@@ -289,9 +289,9 @@ class Adaptador{
     	}
 		$select .= "<select name='$name'>";
 	    foreach ($opciones as $clave => $opcion) {
-	      $clase = ($opcion['es_materia'] == 'N') ? "style='background-color:#313f84;color:#FFF'" : '';
+	      $clase = ($opcion['es_materia'] == 'N') ? "opcion-select-no-materia" : '';
 	      $selected = ($clave == $seleccionado) ? 'selected' : '';
-	      $select .= "<option $clase value='$clave' $selected>".$opcion['materia']."</option>";
+	      $select .= "<option class='$clase' value='$clave' $selected>".$opcion['materia']."</option>";
 	    }
 	    $select .= "</select>";
 	    return $select;

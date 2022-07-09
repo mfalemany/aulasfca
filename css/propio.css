@@ -1,3 +1,19 @@
+select{
+	font-size:0.9rem;
+	padding: 3px 10px;
+}
+option{
+	padding: 3px 10px;
+	font-size: 0.9rem;
+
+}
+.celldiv a{
+	font-size: 1rem;
+}
+.opcion-select-no-materia{
+	background-color: #4740A3;
+	color: #FFFFFF;
+}
 .mensaje{
 	padding: 1px 0px;
 }
@@ -15,7 +31,6 @@
 }
 .company{
 	display: flex;
-
 }
 .mrbs{
 	display: flex;
@@ -23,8 +38,16 @@
 }
 .mrbs a{
 	align-self: center;
+	font-size: 1.4rem;
+	text-shadow: 1px 1px 2px black;
 }
 input[type='button'], input[type='submit'], button{
 	padding: 5px 10px;
 	border-radius: 5px;
+	border-color: #DDD;
+}
+
+input[type='button']:hover, input[type='submit']:hover, button:hover{
+	cursor: pointer;
+	border-color: #AAA;
 }
