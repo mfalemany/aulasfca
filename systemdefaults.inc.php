@@ -40,7 +40,7 @@ namespace MRBS;
 // site prevents external access to the web, this check will time out.  However
 // you can avoid the timeout and stop MRBS checking for up to date versions by
 // setting $zoneinfo_update = false;
-$zoneinfo_update = true;
+$zoneinfo_update = false;
 
 // The VTIMEZONE definitions exist in two forms - normal and Outlook compatible.
 // $zoneinfo_outlook_compatible determines which ones to use.
@@ -558,7 +558,7 @@ $is_mandatory_field = array();
 // on the edit_entry form to be checked by default.  (This will mean that
 // if you make a repeat booking and some of the repeat dates are already
 // booked, MRBS will just skip past those).
-$skip_default = false;
+$skip_default = true;
 
 // $edit_entry_field_order can be used to change the order of fields in the 
 // edit_entry page. This is useful to insert custom fields somewhere other than 
@@ -1251,7 +1251,7 @@ $default_area_room_delimiter = '/';
 // file in the Themes directory
 
 unset($booking_types);    // Include this line when copying to config.inc.php
-$booking_types[] = "E";
+//$booking_types[] = "E";
 $booking_types[] = "I";
 
 // If you don't want to use types then uncomment the following line.  (The booking will

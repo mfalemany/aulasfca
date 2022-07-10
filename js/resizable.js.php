@@ -1232,7 +1232,6 @@ init = function(args) {
                       .css('left', '0')
                       .css('background-color', 'auto')
                       .css('max-height', 'none')
-                      .css('min-height', '<?php echo $main_cell_height ?>px')
                       .addClass('clone')
                       <?php
                       // We use the inner dimensions of the parent rather than the outer dimensions
