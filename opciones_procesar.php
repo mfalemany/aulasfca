@@ -3,7 +3,7 @@
 	use Adaptador;
 	require_once "defaultincludes.inc";
 	require_once "functions.inc";
-
+	
 	// Check the user is authorised for this page
 	checkAuthorised();
 	// Also need to know whether they have admin rights
@@ -17,8 +17,6 @@
 	//se asigna si llega con $_POST
 	$materia_busqueda = '';
 
-	
-	//VERIFICO SI LLEGA UNA ACCI? POR POST
 	if(isset($_POST['action'])){
 		switch ($_POST['action']) {
 			case 'no_laborables':
@@ -44,9 +42,13 @@
 				
 				$_SESSION['notificaciones'][] = $a->nueva_materia($_POST) ? "Materia guardada!" : "Ocurrió un error al intentar guardar la materia";
 				break;
-
+			case 'eliminar_materia':
+				header('Content-type: application/json');
+				http_response_code(200);
+				echo json_encode($a->eliminar_materia($_POST['id_materia']));
+				break;
 		}
-		
+	
 	}
 	//VERIFICO SI LLEGA UNA ACCI? POR GET
 	if(isset($_GET['action'])){
@@ -65,7 +67,8 @@
 
 		
 	}
-	
+
 	$no_laborables = $a->get_no_laborables();
+	
 
 ?>

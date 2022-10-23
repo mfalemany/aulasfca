@@ -26,6 +26,16 @@
 		table tr{
 			margin: 5px 0px 5px 0px;
 		}
+		#btnEliminar {
+			border: thin solid red;
+			background-color: white;
+			color: red;
+		}
+		#btnEliminar:hover {
+			border: thin solid white;
+			background-color: red;
+			color: white;
+		}
 	</style>
 	<title>Configuración</title>
 </head>
@@ -53,30 +63,31 @@
 			echo $a->generar_select('Seleccione una materia para editar','materia_busqueda',$materia_busqueda);
 			?>
 			<input type="submit" value="Editar">
+			<input id="btnEliminar" type="button" value="Eliminar">
 		</form>
 	</fieldset>
 	<fieldset>
 		
 		<legend>Detalles de la materia</legend>
-		<form action="opciones.php" method="post">
+		<form id="form_detalles_materia" action="opciones.php" method="post">
 			<input type="hidden" name="id_materia" value="<?php echo (isset($materia['id_materia'])) ? $materia['id_materia'] : ''; ?>">
-			<input type="hidden" name="action" value=<?php echo (isset($materia)) ? "modificar_materia" : "nueva_materia" ; ?>>
+			<input type="hidden" name="action" id="action" value=<?php echo (isset($materia)) ? "modificar_materia" : "nueva_materia" ; ?>>
 			<table>
 				<tr>
 					<td>Materia:</td>
 					<td>
-						<input type="text" name="materia"  size="75" 
+						<input type="text" name="materia"  size="75" id="materia"
 								value="<?php echo (isset($materia['materia'])) ? $materia['materia'] : ''; ?>" 
 								required>
 					</td>
 				</tr>
 				<tr>
 					<td>Es una materia?</td>
-					<td><input type="checkbox" name="es_materia" <?php echo (isset($materia['es_materia']) && $materia['es_materia'] == 'S') ? 'checked' : '' ; ?> value='S'></td>
+					<td><input type="checkbox" name="es_materia" id="es_materia" <?php echo (isset($materia['es_materia']) && $materia['es_materia'] == 'S') ? 'checked' : '' ; ?> value='S'></td>
 				</tr>
 				<tr>
 					<td>Color:</td>
-					<td><input type="color" name="color" 
+					<td><input type="color" name="color" id="color"
 								value="<?php echo isset($materia['color']) ? $materia['color'] : ''; ?>" required></td>
 				</tr>
 				<!-- <tr>
@@ -99,7 +110,9 @@
 					</td>
 				</tr> -->
 				<tr>
-					<td colspan=2 class="derecha"><input type="submit" value="Guardar"></td>
+					<td colspan="2" class="derecha">
+						<input type="submit" value="Guardar">
+					</td>
 				</tr>
 			</table>
 
@@ -128,19 +141,72 @@
 		
 	</fieldset>
 </div>
-</body>
-<script type="text/javascript">
-	setTimeout(function(){ if( $("#notificacion") != 'undefined'){$("#notificacion").fadeOut()} } , 3000);
-	
-	//recibe el evento ocurrido y un mensaje para mostrar al usuario. Si el usuario no confirma, el evento se anula.
-	function confirmar(evento,mensaje)
-	{
-		if(!confirm(mensaje)){
-			evento.preventDefault();
+	<script type="text/javascript">
+		setTimeout(function(){ if( $("#notificacion") != 'undefined'){$("#notificacion").fadeOut()} } , 3000);
+		
+		//recibe el evento ocurrido y un mensaje para mostrar al usuario. Si el usuario no confirma, el evento se anula.
+		function confirmar(evento,mensaje)
+		{
+			if(!confirm(mensaje)){
+				evento.preventDefault();
+			}
 		}
-	}
 
-	window.history.pushState({}, '', 'opciones.php');
-	
-</script>
+		window.history.pushState({}, '', 'opciones.php');
+		
+	</script>
+
+	<script type="text/javascript">
+		$btnEliminar = document.getElementById("btnEliminar");
+		$btnEliminar.addEventListener('click', function(){
+			$selectMateria    = document.getElementById('materia_busqueda');
+			let id_materia    = $selectMateria.value;
+			let nombreMateria = $selectMateria[$selectMateria.options.selectedIndex].textContent;
+			var eliminarMateria = confirm(`Está seguro que quiere eliminar ${nombreMateria}?`);
+			if (!eliminarMateria) {
+				return;
+			}
+
+			// Limpio el formulario de detalles de materia por si está editando la que quiere eliminar
+			// y reseteo el valor del action del formulario
+			resetFormulario();
+
+
+			
+			let formData = new FormData();
+			formData.append('action', 'eliminar_materia');
+			formData.append('id_materia', id_materia);
+
+			fetch('/opciones_procesar.php', {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.json())
+			.then(json => {
+				console.log(json);
+				if (json.status) {
+					select = document.getElementById('materia_busqueda');
+					select.removeChild(select.options[select.options.selectedIndex]);
+					alert('La materia fue eliminada con éxito');
+
+				} else {
+					alert('Ocurrió el siguiente error: ' + json.message);
+				}
+			})
+				 
+		 
+
+		});
+
+		function resetFormulario(){
+			document.getElementById('form_detalles_materia').reset();
+			document.getElementById('action').value  = 'nueva_materia'; 
+			document.getElementById('materia').value = '';
+			document.getElementById('es_materia').checked = false;
+			document.getElementById('color').value = "#000000";
+		}
+
+
+	</script>
+</body>
 </html>

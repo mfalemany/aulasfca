@@ -92,7 +92,7 @@ class Adaptador{
 		$campos = array();
 		$valores = array();
 		try {
-			//verifico que recibÌ todos los campos obligatorios
+			//verifico que recib√≠ todos los campos obligatorios
 			/*foreach ($obligs as $campo) {
 				if(!array_key_exists($campo,$detalles)){
 					throw new Exception('No se recibieron todos los datos obligatorios: falta $campo');
@@ -126,7 +126,7 @@ class Adaptador{
 			$sql = "INSERT INTO materias ($campos) VALUES ($valores)";
 			//echo $sql;
 			
-			//si se guarda la materia, guardo los cÛdigos
+			//si se guarda la materia, guardo los c√≥digos
 			if($this->db->command($sql)){
 				$id_materia = $this->db->insert_id('materias','id_materia');
 				foreach ($codigos as $codigo) {
@@ -151,7 +151,7 @@ class Adaptador{
 		$sql = "DELETE FROM materias_codigos WHERE id_materia = ".$this->quote($detalles['id_materia']);
 		$this->db->command($sql);
 
-		//Si existen cÛdigos, los convierto en un array
+		//Si existen c√≥digos, los convierto en un array
 		if(isset($detalles["codigos"]) && strlen(trim($detalles["codigos"])) > 0 ){
 			$codigos = explode(',',$detalles['codigos']);
 		}
@@ -171,7 +171,7 @@ class Adaptador{
 
 		$sql = "UPDATE materias SET $campos WHERE id_materia = ".$id_materia;
 		
-		//si se guarda la materia, guardo los cÛdigos
+		//si se guarda la materia, guardo los c?igos
 		$resultado = $this->db->command($sql);
 		if($resultado){
 			if(isset($codigos)){
@@ -185,6 +185,38 @@ class Adaptador{
 		}else{
 			return FALSE;
 		}
+	}
+
+	function eliminar_materia($id_materia)
+	{
+		$sql = "SELECT COUNT(*) FROM mrbs_entry WHERE name = " . $this->quote($id_materia);
+		$cantidad_reservas = $this->db->query1($sql);
+
+		if ($cantidad_reservas > 0) {
+			return [
+				'status'  => false, 
+				'message' => "No se puede eliminar una materia que ya tiene reservas"
+			];
+		}
+
+		if (!is_numeric($id_materia)) {
+			return [
+				'status'  => false, 
+				'message' => "El identificador de materia recibido no es v√°lido"
+			];
+		}
+
+		// Elimino todos los codigos que pueda tener vinculada la materia
+		$sql = "DELETE FROM materias_codigos WHERE id_materia = " . $this->quote($id_materia);
+		$this->db->command($sql);
+
+		$sql = "DELETE FROM materias WHERE id_materia = " . $this->quote($id_materia);
+		$this->db->command($sql);
+
+		return [
+			'status'  => true, 
+			'message' => "Se ha eliminado correctamente la materia"
+		];
 	}
 
 	function existe_materia($filtro = array())
@@ -261,7 +293,7 @@ class Adaptador{
 
 	function eliminar_acentos($string)
 	{
-		return str_replace(array('·','È','Ì','Û','˙','¡','…','Õ','”','⁄'),array('a','e','i','o','u','A','E','I','O','U'),$string);
+		return str_replace(array('√°','√©','√≠','√≥','√∫','√Å','√â','√ç','√ì','√ö'),array('a','e','i','o','u','A','E','I','O','U'),$string);
 	}
 
 	function quote($texto)
@@ -287,7 +319,7 @@ class Adaptador{
     	if(strlen($etiqueta)){
     		$select .= "<div>$etiqueta:</div>";
     	}
-		$select .= "<select name='$name'>";
+		$select .= "<select name='$name' id='$name'>";
 	    foreach ($opciones as $clave => $opcion) {
 	      $clase = ($opcion['es_materia'] == 'N') ? "opcion-select-no-materia" : '';
 	      $selected = ($clave == $seleccionado) ? 'selected' : '';
@@ -303,7 +335,7 @@ class Adaptador{
 			'@<script[^>]*?>.*?</script>@si',   // Elimina javascript
 			'@<[\/\!]*?[^<>]*?>@si',            // Elimina las etiquetas HTML
 			'@<style[^>]*?>.*?</style>@siU',    // Elimina las etiquetas de estilo
-			'@<![\s\S]*?--[ \t\n\r]*>@'         // Elimina los comentarios multi-lÌnea
+			'@<![\s\S]*?--[ \t\n\r]*>@'         // Elimina los comentarios multi-l?ea
 		);
 
 		$output = preg_replace($search, '', $input);
@@ -327,7 +359,7 @@ class Adaptador{
 	}
 
 	/** ==========================================================================================
-	 *  ============================ DÕAS NO LABORABLES ==========================================
+	 *  ============================ D?S NO LABORABLES ==========================================
 	 *========================================================================================== */
 	function borrar_no_laborable($id)
 	{
@@ -370,7 +402,7 @@ class Adaptador{
 	 *========================================================================================== */
 
 	/*
-	Retorna las reservas de un dia determinado (pasado como par·metro).
+	Retorna las reservas de un dia determinado (pasado como par?etro).
 	 */
 	function get_cronograma_diario($fecha){
 		if($fecha){
@@ -379,7 +411,7 @@ class Adaptador{
 				if(    strlen($partes[0]) == 4  &&  is_numeric($partes[0])  
 					&& strlen($partes[1]) == 2  &&  is_numeric($partes[1])
 					&& strlen($partes[2]) == 2  &&  is_numeric($partes[2])){
-					//Es una fecha v·lida?  (checkdate(month,day,year))
+					//Es una fecha v?ida?  (checkdate(month,day,year))
 					if(checkdate($partes[1],$partes[2],$partes[0])){
 						$fecha = implode('-',$partes);
 					}else{
